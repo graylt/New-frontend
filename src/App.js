@@ -209,7 +209,7 @@ const App = () => {
       sales_price: sales_price,
     }).then(()=>{
        axios.get('http://localhost:3000/assets').then((res)=>{
-        setAssets(res.data)
+        {setAssets(res.data)}
       })
     })
 }
@@ -271,79 +271,80 @@ const App = () => {
 
 
       <div className="flex-parent-container">
-      {assets.map((assets)=>{
+        <h3>NFTs</h3>
+        {assets.map((assets) => {
           return <div className="item">
-          <img src={assets.Primary_Image}/><br/>
-          <br/>
-          Title:{assets.handlePrice}<br/>
-          <br/>
-          Description:{assets.handleDescription}<br/>
-          <br/>
-          Date created:{assets.handleCreatedDate}<br/>
-          <br/>
-          Additonal images:<img src={assets.handleAdditionalImages}/><br/>
-          <br/>
-          tags:{assets.handleTags}<br/>
-          <br/>
-          Artist:{assets.handleArtist}<br/>
-          <br/>
-          Owner:{assets.handleOwner}<br/>
-          <br/>
-          Title of collection:{assets.handleCollection_Title}<br/>
-          <br/>
-          Collection image:{assets.handleCollection_Image}<br/>
-          <br/>
-          Date url:{assets.handleData_URL}<br/>
-          <br/>
-          # of Bids:{assets.handleBid_Count}<br/>
-          <br/>
-          Bid price:{assets.handleBid_Price}<br/>
-          <br/>
-          # of sales:{assets.handleSales_Count}<br/>
-          <br/>
-          Sale price:{assets.handleSales_Price}<br/>
-          <br/>
-          
-
-          <button onClick={(event)=>{handleDelete(assets)}}>Remove NFT</button><br/>
-            <br/>
+            <img src={assets.primary_Image} /><br />
+            <br />
+            Title:{assets.handlePrice}<br />
+            <br />
+            Description:{assets.handleDescription}<br />
+            <br />
+            Date created:{assets.handleCreatedDate}<br />
+            <br />
+            Additonal images:<img src={assets.handleAdditionalImages} /><br />
+            <br />
+            tags:{assets.handleTags}<br />
+            <br />
+            Artist:{assets.handleArtist}<br />
+            <br />
+            Owner:{assets.handleOwner}<br />
+            <br />
+            Title of collection:{assets.handleCollection_Title}<br />
+            <br />
+            Collection image:{assets.handleCollection_Image}<br />
+            <br />
+            Date url:{assets.handleData_URL}<br />
+            <br />
+            # of Bids:{assets.handleBid_Count}<br />
+            <br />
+            Bid price:{assets.handleBid_Price}<br />
+            <br />
+            # of sales:{assets.handleSales_Count}<br />
+            <br />
+            Sale price:{assets.handleSales_Price}<br />
+            <br />
 
 
-          <form onSubmit={(event)=>{handleEdit(event, assets)}}>
-           Image: <input type="text" onChange={handlePrimary_Image}/><br/>
-          <br/>
-          Title:  <input type="text" onChange={handleTitle}/><br/>
-          <br/>
-          Description: <input type="text" onChange={handleDescription}/><br/>
-          <br/>
-          Date created: <input type="text" onChange={handleCreatedDate}/><br/>
-          <br/>
-          Additonal images: <input type="text" onChange ={handleAdditionalImages}/><br/>
-          <br/>
-          tags:  <input type="text" onChange ={handleTags}/><br/>
-          <br/>
-          Artist:  <input type="text" onChange ={handleArtist}/><br/>
-          <br/>
-          Owner:  <input type="text" onChange ={handleOwner}/><br/>
-          <br/>
-          Title of collection:  <input type="text" onChange ={handleCollection_Title}/><br/>
-          <br/>
-          Collection image:  <input type="text" onChange ={handleCollection_Image}/><br/>
-          <br/>
-          Date url:  <input type="text" onChange ={handleData_URL}/><br/>
-          <br/>
-          # of Bids:  <input type="number" onChange ={handleBid_Count}/><br/>
-          <br/>
-          Bid price:  <input type="number" onChange ={handleBid_Price}/><br/>
-          <br/>
-          # of sales:  <input type="number" onChange ={handleSales_Count}/><br/>
-          <br/>
-          Sale price:  <input type="number" onChange ={handleSales_Price}/><br/>
-          <br/>
-          <input type="submit" value="Edit NFT"/>
-        </form>
-        </div>
-         })}
+            <button onClick={(event) => { handleDelete(assets) }}>Remove NFT</button><br />
+            <br />
+
+
+            <form onSubmit={(event) => { handleEdit(event, assets) }}>
+              Image: <input type="text" onChange={handlePrimary_Image} /><br />
+              <br />
+              Title:  <input type="text" onChange={handleTitle} /><br />
+              <br />
+              Description: <input type="text" onChange={handleDescription} /><br />
+              <br />
+              Date created: <input type="text" onChange={handleCreatedDate} /><br />
+              <br />
+              Additonal images: <input type="text" onChange={handleAdditionalImages} /><br />
+              <br />
+              tags:  <input type="text" onChange={handleTags} /><br />
+              <br />
+              Artist:  <input type="text" onChange={handleArtist} /><br />
+              <br />
+              Owner:  <input type="text" onChange={handleOwner} /><br />
+              <br />
+              Title of collection:  <input type="text" onChange={handleCollection_Title} /><br />
+              <br />
+              Collection image:  <input type="text" onChange={handleCollection_Image} /><br />
+              <br />
+              Date url:  <input type="text" onChange={handleData_URL} /><br />
+              <br />
+              # of Bids:  <input type="number" onChange={handleBid_Count} /><br />
+              <br />
+              Bid price:  <input type="number" onChange={handleBid_Price} /><br />
+              <br />
+              # of sales:  <input type="number" onChange={handleSales_Count} /><br />
+              <br />
+              Sale price:  <input type="number" onChange={handleSales_Price} /><br />
+              <br />
+              <input type="submit" value="Edit NFT" />
+            </form>
+          </div>
+        })}
       </div>
     </>
   )
