@@ -3,16 +3,19 @@ import './App.css';
 import {useState, useEffect} from 'react';
 // import Objects from './components/Objects';
 import Coin from './components/Coin';
+import AddAsset from './components/AddAsset';
+import EditNFT from './components/EditNFT';
 import axios from 'axios';
 
 
 const App = () => {
 
+  const [seeAsset, setSeeAsset] = useState(false)
+
   // api states
   const [assets, setAssets] = useState([])
   const [coins, setCoins] = useState([])
 
-  // const[seeAddAsset, setSeeAddAsset] = useState(false)
 
   // form states
   const [primary_Image, setPrimary_Image] = useState()
@@ -39,8 +42,15 @@ const App = () => {
   const [sales_count, setSales_Count] = useState()
   const [sales_price, setSales_Price] = useState()
 
-  // submit state
-  // const [NFT, setNFT] = useState()
+
+
+  //submit state
+  const [seeNFT, setSeeNFT] = useState(false)
+  const [editNFT, setEditNFT] = useState({})
+
+
+
+
 
 
   // form states handle
@@ -108,7 +118,29 @@ const App = () => {
     setSales_Price(event.target.value)
   }
 
-  // nft post
+  const toggleShowAsset = () => {
+    if (seeAsset === false) {
+      setSeeAsset(true)
+    } else {
+      setSeeAsset(false)
+    }
+  }
+
+
+  const toggleEditAsset = () => {
+    if (seeNFT === false) {
+      setSeeNFT(true)
+    } else {
+      setSeeNFT(false)
+      // setPrimary_Image()
+      setTitle()
+      setEditNFT({})
+    }
+  }
+
+
+
+  //nft post
   const submitAsset = (event) => {
     event.preventDefault()
     axios.post('http://localhost:3000/assets', {
@@ -141,11 +173,14 @@ const App = () => {
         // console.log(res.data)
       })
     })
+    toggleShowAsset()
+    setPrimary_Image()
+    setTitle()
   }
   
   // const getAssets = () => {
   //   axios.get('http://localhost:3000/assets').then((res) => {
-  //     console.log(res.data)
+      // console.log(res.data)
   //     setAssets (res.data)
   //   })
   // }
@@ -163,7 +198,7 @@ const App = () => {
     getCoins()
     axios.get('http://localhost:3000/assets').then((res)=>{
       setAssets(res.data)
-      // getAssets()
+      
     })
   },[])
 
@@ -212,14 +247,26 @@ const App = () => {
         setAssets(res.data)
       })
     })
+    // setAdditionalImages()
+    setEditNFT(assets)
+    toggleEditAsset()
+    
 }
 
 
   return (
     <>
 
+
+
       <header>
         <h1>Cautious Ape</h1>
+
+        
+     
+
+
+{/* CRYPTO COUNTER */}
 
         <div className='coin'>
         {coins.map((coin) => {
@@ -228,123 +275,89 @@ const App = () => {
           }
         })}
         </div>
-
       </header>
 
-      <div className="submit-form-container">
-        <form onSubmit={submitAsset}>
-        <h3>Submit a new NFT</h3>
-          Image: <input type="text" onChange={handlePrimary_Image}/><br/>
-          <br/>
-          Title:  <input type="text" onChange={handleTitle}/><br/>
-          <br/>
-          Description: <input type="text" onChange={handleDescription}/><br/>
-          <br/>
-          Date created: <input type="text" onChange={handleCreatedDate}/><br/>
-          <br/>
-          Additonal images: <input type="text" onChange ={handleAdditionalImages}/><br/>
-          <br/>
-          tags:  <input type="text" onChange ={handleTags}/><br/>
-          <br/>
-          Artist:  <input type="text" onChange ={handleArtist}/><br/>
-          <br/>
-          Owner:  <input type="text" onChange ={handleOwner}/><br/>
-          <br/>
-          Title of collection:  <input type="text" onChange ={handleCollection_Title}/><br/>
-          <br/>
-          Collection image:  <input type="text" onChange ={handleCollection_Image}/><br/>
-          <br/>
-          Date url:  <input type="text" onChange ={handleData_URL}/><br/>
-          <br/>
-          # of Bids:  <input type="number" onChange ={handleBid_Count}/><br/>
-          <br/>
-          Bid price:  <input type="number" onChange ={handleBid_Price}/><br/>
-          <br/>
-          # of sales:  <input type="number" onChange ={handleSales_Count}/><br/>
-          <br/>
-          Sale price:  <input type="number" onChange ={handleSales_Price}/><br/>
-          <br/>
-          <input type="submit" value="Add NFT"/>
-        </form>
-      </div>
+{/* ADD NEW NFT */}
 
-
-
-      <div className="flex-parent-container">
-      {assets.map((assets)=>{
-          return <div className="item">
-          <img src={assets.Primary_Image}/><br/>
-          <br/>
-          Title:{assets.handlePrice}<br/>
-          <br/>
-          Description:{assets.handleDescription}<br/>
-          <br/>
-          Date created:{assets.handleCreatedDate}<br/>
-          <br/>
-          Additonal images:<img src={assets.handleAdditionalImages}/><br/>
-          <br/>
-          tags:{assets.handleTags}<br/>
-          <br/>
-          Artist:{assets.handleArtist}<br/>
-          <br/>
-          Owner:{assets.handleOwner}<br/>
-          <br/>
-          Title of collection:{assets.handleCollection_Title}<br/>
-          <br/>
-          Collection image:{assets.handleCollection_Image}<br/>
-          <br/>
-          Date url:{assets.handleData_URL}<br/>
-          <br/>
-          # of Bids:{assets.handleBid_Count}<br/>
-          <br/>
-          Bid price:{assets.handleBid_Price}<br/>
-          <br/>
-          # of sales:{assets.handleSales_Count}<br/>
-          <br/>
-          Sale price:{assets.handleSales_Price}<br/>
-          <br/>
-          
-
-          <button onClick={(event)=>{handleDelete(assets)}}>Remove NFT</button><br/>
-            <br/>
-
-
-          <form onSubmit={(event)=>{handleEdit(event, assets)}}>
-           Image: <input type="text" onChange={handlePrimary_Image}/><br/>
-          <br/>
-          Title:  <input type="text" onChange={handleTitle}/><br/>
-          <br/>
-          Description: <input type="text" onChange={handleDescription}/><br/>
-          <br/>
-          Date created: <input type="text" onChange={handleCreatedDate}/><br/>
-          <br/>
-          Additonal images: <input type="text" onChange ={handleAdditionalImages}/><br/>
-          <br/>
-          tags:  <input type="text" onChange ={handleTags}/><br/>
-          <br/>
-          Artist:  <input type="text" onChange ={handleArtist}/><br/>
-          <br/>
-          Owner:  <input type="text" onChange ={handleOwner}/><br/>
-          <br/>
-          Title of collection:  <input type="text" onChange ={handleCollection_Title}/><br/>
-          <br/>
-          Collection image:  <input type="text" onChange ={handleCollection_Image}/><br/>
-          <br/>
-          Date url:  <input type="text" onChange ={handleData_URL}/><br/>
-          <br/>
-          # of Bids:  <input type="number" onChange ={handleBid_Count}/><br/>
-          <br/>
-          Bid price:  <input type="number" onChange ={handleBid_Price}/><br/>
-          <br/>
-          # of sales:  <input type="number" onChange ={handleSales_Count}/><br/>
-          <br/>
-          Sale price:  <input type="number" onChange ={handleSales_Price}/><br/>
-          <br/>
-          <input type="submit" value="Edit NFT"/>
-        </form>
+      <div className="show-button">
+        <button onClick={toggleShowAsset}>
+          New NFT
+        </button>
         </div>
-         })}
+
+      <div>
+        {seeAsset ? <AddAsset submitAsset={submitAsset} handlePrimary_Image={handlePrimary_Image}/> : ""}
       </div>
+          
+     
+{/* SHOW NFT */}
+
+      <div>
+        {assets.map((assets) => {
+          return (
+            <div key={assets._id}>
+                   <img src={assets.primary_Image}/><br/>
+        <br/>
+        Title:{assets.title}<br/>
+        <br/>
+        {/* Description:{assets.description}<br/>
+        <br/>
+        Date created:{assets.createdDate}<br/>
+        <br/>
+        Additonal images:<img src={assets.additionalImages}/><br/>
+        <br/>
+        tags:{assets.tags}<br/>
+        <br/>
+        Artist:{assets.artist}<br/>
+        <br/>
+        Owner:{assets.owner}<br/>
+        <br/>
+        Title of collection:{assets.collection_Title}<br/>
+        <br/>
+        Collection image:{assets.collection_Image}<br/>
+        <br/>
+        Data url:{assets.data_URL}<br/>
+        <br/>
+        # of Bids:{assets.bid_count}<br/>
+        <br/>
+        Bid price:{assets.bid_price}<br/>
+        <br/>
+        # of sales:{assets.sales_count}<br/>
+        <br/>
+        Sale price:{assets.sales_price}<br/>
+        <br/> */}
+
+{/* DELETE NFT */}
+
+        <button onClick={(event)=>{handleDelete(assets)}}>Remove NFT</button><br/>
+          <br/>
+
+{/* EDIT NFT */}
+
+<div>
+        <button onClick={toggleEditAsset}>
+          Edit
+        </button>
+      
+        
+        </div>
+
+      <div>
+        {seeNFT ? <EditNFT assets={assets} handleEdit={handleEdit} submitAsset={submitAsset} handleTitle={handleTitle} toggleShowAsset={toggleShowAsset}/> : ""}
+        
+      </div>
+
+  
+
+    
+
+
+
+
+        </div>
+          )
+        })}
+        </div>
     </>
   )
 }
