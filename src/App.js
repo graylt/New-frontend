@@ -2,7 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react';
 // import Objects from './components/Objects';
-import Coin from './components/Coin';
+
+import ethereum from './components/ethereum.png'
+import solana from './components/solana.png'
+import Ecoin from './components/Ecoin';
+import Scoin from './components/Scoin';
+
+// import Coin from './components/Coin';
 import AddAsset from './components/AddAsset';
 import EditNFT from './components/EditNFT';
 import axios from 'axios';
@@ -12,7 +18,49 @@ const App = () => {
 
   // api states
   const [assets, setAssets] = useState([])
-  const [coins, setCoins] = useState([])
+  // const [coins, setCoins] = useState([])
+  const [ecoins, setECoins] = useState([]) 
+  const [scoins, setSCoins] = useState([]) 
+
+  // calculator states
+  const [erates, setERates] = useState(1)
+  const [srates, setSRates] = useState(1)
+  const [dollars, setDollars] = useState(0)
+  const [eths, setEths] = useState(0)
+  const [sols, setSols] = useState(0)
+  const [currency, setCurrency] = useState('ETH')
+
+  // set calculator currency
+  const bidETH = (event) => {
+    setCurrency('ETH')
+  }
+  
+  const bidSOL = (event) => {
+    setCurrency('SOL')
+  }
+
+
+  // calculator states handle
+  const handleDollars = (event) => {
+    setDollars(event.target.value)
+  }
+
+  const handleERate = (event) => {
+    setERates(event.target.value)
+  }
+
+  const handleSRate = (event) => {
+    setSRates(event.target.value)
+  }
+
+  // calculate bids
+  const calcEths = (event) => {
+    setEths(dollars / erates )
+  } 
+
+  const calcSols = (event) => {
+    setSols(dollars / srates )
+  } 
 
   // form states
   const [bought, setBought] = useState(false)
@@ -220,7 +268,9 @@ const App = () => {
   const getCoins = () => {
     axios.get('https://api.coincap.io/v2/assets').then((res) => {
       // console.log(res.data.data)
-      setCoins (res.data.data)
+      // setCoins (res.data.data)
+      setECoins (res.data.data)
+      setSCoins (res.data.data)
     })
   }
 
@@ -308,20 +358,68 @@ const App = () => {
   return (
     <>
     <main className="wrapper">
-      <header>
-        <h1>Cautious Ape</h1>
+        <header>
+          <div className="navTop">
+            <div className="name">
+              <h1>Cautious Ape</h1>
+            </div>
+            <img src={ethereum} />
+            <div className='ecoin'>
+              {ecoins.map((ecoin) => {
+                if (ecoin.symbol === "ETH") {
+                  return <Ecoin ecoin={ecoin} key={ecoin.rank} />
+                }
+              })}
+            </div>
 
-{/* CRYPTO COUNTER */}
+            <img src={solana} />
+            <div className='scoin'>
+              {scoins.map((scoin) => {
+                if (scoin.symbol === "SOL") {
+                  return <Scoin scoin={scoin} key={scoin.rank} />
+                }
+              })}
+            </div>
+          </div>
+        </header>
 
-        <div className='coin'>
-        {coins.map((coin) => {
-          if(coin.symbol === "ETH" || coin.symbol === "SOL") {
-            return <Coin coin={coin} key={coin.rank} />
+        <aside>
+
+          {
+            (currency === 'ETH') ?
+              <div className="navLeft">
+                <h3>Crypto Calculator</h3>
+                <button onClick={bidETH}>ETH Calculator</button>
+                <button onClick={bidSOL}>SOL Calculator</button><br></br>
+
+                <p>ETH: {eths} </p>
+
+                <form>
+                  Amount (USD) <input type="number" onChange={handleDollars} /><br />
+                  Rate (ETH) <input type="number" step="0.0000000000000001" onChange={handleERate} /><br />
+                </form>
+                <button onClick={calcEths}>Convert to ETH</button><br></br>
+              </div>
+              :
+              <div className="navLeft">
+                <h3>Crypto Calculator</h3>
+                <button onClick={bidETH}>ETH Calculator</button>
+                <button onClick={bidSOL}>SOL Calculator</button><br></br>
+
+                <p>SOL: {sols} </p>
+
+                <form>
+                  Amount (USD) <input type="number" onChange={handleDollars} /><br />
+                  Rate (SOL) <input type="number" step="0.0000000000000001" onChange={handleSRate} /><br />
+                </form>
+                <button onClick={calcSols}>Convert to SOL</button><br></br>
+              </div>
           }
-        })}
-        </div>
-      </header>
 
+        </aside>
+
+      
+<div className="main">
 {/* SHOW NFT */}
         <div className="subheader-container">
         <h2>NFT Watchlist</h2>
@@ -516,6 +614,7 @@ const App = () => {
         </div>
           )
         })}
+        </div>
         </div>
         </main>
     </>
