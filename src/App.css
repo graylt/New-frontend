@@ -43,16 +43,32 @@ body {
 
 .wrapper {
   display: grid;
-  grid-template-columns: .5fr, 1fr, 1fr, 1fr, 1fr, 1fr;
+  grid-template-columns: 1fr, 1fr;
+  row-gap: 24px;
 }
+
+/* .subheader-container {
+  
+} */
+
 .show-container {
+  width: 4em;
   object-fit: contain;
   display: flex;
   flex-direction: row;
-  margin-top: 32px;
+  flex-wrap: wrap;
+  margin-top: 24px;
   grid-column: 2;
-  justify-content: left;
+  justify-content: start;
 }
+
+/* .asset-container {
+
+  margin-bottom: 32px;
+ 
+} */
+
+
 
 img {
   height: 300px;

@@ -14,8 +14,8 @@ const App = () => {
   const [assets, setAssets] = useState([])
   const [coins, setCoins] = useState([])
 
-
   // form states
+  const [bought, setBought] = useState(false)
   const [primary_Image, setPrimary_Image] = useState()
   const [title, setTitle] = useState()
   const [description, setDescription] = useState()
@@ -50,17 +50,19 @@ const App = () => {
   const [editNFT, setEditNFT] = useState({})
   const [editView, setEditView] = useState(true)
 
+
+  // handle for select form
  const [bids, setBids] = useState() 
  
  const handleChange = (event) => {
-  setBids(event.target.value)
+  // setBids(event.target.value)
 }
 
-
-  
-
-
   // form states handle
+  const handleBought = (event) => {
+    setBought(event.target.checked)
+  }
+
   const handlePrimary_Image = (event) => {
     setPrimary_Image(event.target.value)
   }
@@ -139,10 +141,23 @@ const App = () => {
     } else {
       setSeeNFT(false)
       setEditView(!editView)
-     
-      setPrimary_Image()
-      setTitle()
       setEditNFT({})
+      setPrimary_Image()
+      // setBought()
+      setTitle()
+      setDescription()
+      // setCreatedDate()
+      // setAdditionalImages()
+      setTags()
+      setArtist()
+      // setOwner()
+      // setCollection_Title()
+      // setCollection_Image()
+      setData_URL()
+      setBid_Count()
+      setBid_Price()
+      setSales_Count()
+      setSales_Price()
     }
   }
 
@@ -151,11 +166,12 @@ const App = () => {
     event.preventDefault()
     axios.post('http://localhost:3000/assets', {
     // axios.post('https://still-stream-84605.herokuapp.com/assets', {
+      bought: bought,
       primary_Image: primary_Image,
       title: title,
       description: description,
-      createdDate: createdDate,
-      additionalImages: additionalImages,
+      // createdDate: createdDate,
+      // additionalImages: additionalImages,
       tags: tags,
   
       // artist or owner info
@@ -163,8 +179,8 @@ const App = () => {
       owner: owner,
       
       // collection info 
-      collection_Title: collection_Title,
-      collection_Image: collection_Image,
+      // collection_Title: collection_Title,
+      // collection_Image: collection_Image,
   
       // contract info
       data_URL: data_URL,
@@ -182,11 +198,22 @@ const App = () => {
       })
     })
     toggleShowAsset()
+    setBought()
     setPrimary_Image()
     setTitle()
+    setDescription()
+    // setCreatedDate()
+    // setAdditionalImages()
+    setTags()
     setArtist()
+    // setOwner()
+    // setCollection_Title()
+    // setCollection_Image()
+    setData_URL()
     setBid_Count()
     setBid_Price()
+    setSales_Count()
+    setSales_Price()
   }
 
   // get request with axios - ethereum/crypto api 
@@ -227,6 +254,7 @@ const App = () => {
     event.preventDefault()
     axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
     // axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
+      bought: bought,
       primary_Image: primary_Image,
       title: title,
       description: description,
@@ -259,8 +287,22 @@ const App = () => {
     // setAdditionalImages()
     setEditNFT(assets)
     toggleEditAsset()
+    setPrimary_Image()
+    setBought()
+    setTitle()
+    setDescription()
+    setCreatedDate()
+    // setAdditionalImages()
+    setTags()
+    setArtist()
+    // setOwner()
+    // setCollection_Title()
+    // setCollection_Image()
+    setData_URL()
     setBid_Count()
     setBid_Price()
+    setSales_Count()
+    setSales_Price()
 }
 
   return (
@@ -280,64 +322,163 @@ const App = () => {
         </div>
       </header>
 
-{/* ADD NEW NFT */}
+{/* SHOW NFT */}
+        <div className="subheader-container">
+        <h2>NFT Watchlist</h2>
+
+        {/* ADD NEW NFT */}
 
       <div className="new-button">
         <button onClick={toggleShowAsset}>
-          New NFT
+          Add NFT
         </button>
         </div>
-
       <div>
-        {seeAsset ? <AddAsset submitAsset={submitAsset} handlePrimary_Image={handlePrimary_Image} handleTitle={handleTitle} handleBid_Count={handleBid_Count}/> : ""}
+        {seeAsset ? <AddAsset 
+        submitAsset={submitAsset} 
+        handleBought={handleBought} 
+        handlePrimary_Image={handlePrimary_Image} 
+        handleTitle={handleTitle}
+        handleDescription={handleDescription}
+        // handleCreatedDate={handleCreatedDate} 
+        // handleAdditionalImages={handleAdditionalImages} 
+        handleTags={handleTags} 
+        handleArtist={handleArtist} 
+        // handleOwner={handleOwner} 
+        // handleCollection_Title={handleCollection_Title} 
+        // handleCollection_Image={handleCollection_Image} 
+        handleData_URL={handleData_URL} 
+        handleBid_Count={handleBid_Count} 
+        handleBid_Price={handleBid_Price} 
+        handleSales_Count={handleSales_Count} 
+        handleSales_Price={handleSales_Price}
+        /> : ""}
       </div>
-     
-{/* SHOW NFT */}
 
+        </div>
+        
       <div className="show-container">
         {assets.map((assets) => {
           return (
             <div key={assets._id}>
                    <img src={assets.primary_Image}/><br/>
         <br/>
-        Title:{assets.title}<br/>
-        <br/>
-         Description:{assets.description}<br/>
-        <br/>
-        Date created:{assets.createdDate}<br/>
-        <br/>
+        <h3>Bought:{assets.bought}</h3><br/>
+
+{/* DETAILS SELECT FORM */}
+
+        <form>
+        <select value={assets} onChange={handleChange}>
+        <option defaultValue="Details">
+             Details
+           </option>
+           <option value={assets.value}>
+             Title: {assets.title}
+           </option>
+           <option value={assets.value}>
+             Artist: {assets.artist}
+           </option>
+           <option value={assets.value}>
+             Description: {assets.description}
+           </option>
+           {/* <option value={assets.value}>
+             Date created: {assets.createdDate}
+           </option> */}
+           {/* <option value={assets.value}>
+             Description: {assets.createdDate}
+           </option>
+           <option value={assets.value}>
+             Additional images: {assets.additionalImages}
+           </option>
+           <option value={assets.value}>
+             Owner: {assets.owner}
+           </option>
+           <option value={assets.value}>
+             Collection title: {assets.collection_Title}
+           </option>
+           <option value={assets.value}>
+             Collection image: {assets.collection_Image}
+           </option> */}
+           <option value={assets.value}>
+             Tags: {assets.tags}
+           </option>
+        </select>
+        </form>
+
+{/* BEFORE SELECT FORM */}
+
+              {/* Title:{assets.title}<br/>
+        <br/> */}
+        {/* Artist:{assets.artist}<br/>
+        <br/> */}
+         {/* Description:{assets.description}<br/>
+        <br/> */}
+        {/* Date created:{assets.createdDate}<br/>
+        <br/> */}
         {/* Additonal images:<img src={assets.additionalImages}/><br/>
         <br/> */}
-        tags:{assets.tags}<br/>
-        <br/>
-        Artist:{assets.artist}<br/>
-        <br/>
-        Owner:{assets.owner}<br/>
-        <br/>
+        {/* Owner:{assets.owner}<br/>
+        <br/> */}
         {/* Title of collection:{assets.collection_Title}<br/>
         <br/>
         Collection image:{assets.collection_Image}<br/>
         <br/> */}
-        Data url:{assets.data_URL}<br/>
-        <br/>
-        <form>
-          <select value={assets} onChange={handleChange}>
-           <option value={assets.value}>Bids: {assets.bid_count}</option>
-           <option value={assets.value}>Bid price: {assets.bid_price}</option>
-          </select>
-        </form>
-        {/* # of Bids:{assets.bid_count}<br/>
-        <br/>
-        Bid price:{assets.bid_price}<br/>
+        {/* tags:{assets.tags}<br/>
         <br/> */}
+         {/* <br/>
         # of sales:{assets.sales_count}<br/>
         <br/>
         Sale price:{assets.sales_price}<br/>
+        <br/> */}
+    
+{/* BID SELECT FORM */}
+
+        <a href={assets.data_URL}>
+          Buy
+        </a>
+        <br/>
+        <form>
+          <select value={assets} onChange={handleChange}>
+           <option defaultValue="Bids">
+             Bids
+           </option>
+           <option value={assets.value}>
+             Bids: {assets.bid_count}
+           </option>
+           <option value={assets.value}>
+             Bid price: {assets.bid_price}
+           </option>
+          </select>
+        </form>
+        <br/>
+        
+{/* SALE SELECT FORM */}
+
+        <a href={assets.data_URL}>
+          Sell
+        </a>
+        <br/>
+        <form>
+          <select value={assets} onChange={handleChange}>
+          <option defaultValue="Sales">
+             Sales
+           </option>
+           <option value={assets.value}>
+             Sales: {assets.sales_count}
+           </option>
+           <option value={assets.value}>
+             Sale price: {assets.sales_price}
+           </option>
+          </select>
+        </form>
         <br/>
 
 {/* DELETE NFT */}
 
-        <button onClick={(event)=>{handleDelete(assets)}}>Remove NFT</button><br/>
+        <button onClick={(event)=>{handleDelete(assets)}}>
+          Remove NFT
+        </button>
+        <br/>
           <br/>
 
 {/* EDIT NFT */}
@@ -349,7 +490,28 @@ const App = () => {
      </button>  
         </div>
       <div>
-        {seeNFT ? <EditNFT assets={assets} handleEdit={handleEdit} submitAsset={submitAsset} handleTitle={handleTitle} toggleShowAsset={toggleShowAsset}/> : ""}
+        {seeNFT ? <EditNFT 
+        assets={assets} 
+        handleEdit={handleEdit} 
+        submitAsset={submitAsset}  
+        toggleShowAsset={toggleShowAsset}
+        // handlePrimary_Image={handlePrimary_Image} 
+        handleTitle={handleTitle} 
+        handleBought={handleBought} 
+        handleDescription={handleDescription} 
+        // handleCreatedDate={handleCreatedDate} 
+        // handleAdditionalImages={handleAdditionalImages} 
+        handleTags={handleTags} 
+        handleArtist={handleArtist} 
+        // handleOwner={handleOwner} 
+        // handleCollection_Title={handleCollection_Title} 
+        // handleCollection_Image={handleCollection_Image} 
+        handleData_URL={handleData_URL} 
+        handleBid_Count={handleBid_Count} 
+        handleBid_Price={handleBid_Price} 
+        handleSales_Count={handleSales_Count} 
+        handleSales_Price={handleSales_Price}
+        /> : ""}
       </div>
         </div>
           )
