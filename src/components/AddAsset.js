@@ -4,7 +4,7 @@ const newAsset = (props) => {
         <div className="submit-form-container">
           <h3>Submit a new NFT</h3>
         <form onSubmit={props.submitAsset}>
-          Image: <input type="text" onChange={props.handlePrimary_Image}/><br/>
+          Image: <input type="url" onChange={props.handlePrimary_Image}/><br/>
           <br/>
           Title:  <input type="text" onChange={props.handleTitle}/><br/>
           <br/>
@@ -12,19 +12,19 @@ const newAsset = (props) => {
           <br/>
           Date created: <input type="text" onChange={props.handleCreatedDate}/><br/>
           <br/>
-          Additonal images: <input type="text" onChange ={props.handleAdditionalImages}/><br/>
-          <br/>
+          {/* Additonal images: <input type="text" onChange ={props.handleAdditionalImages}/><br/>
+          <br/> */}
           tags:  <input type="text" onChange ={props.handleTags}/><br/>
           <br/>
           Artist:  <input type="text" onChange ={props.handleArtist}/><br/>
           <br/>
           Owner:  <input type="text" onChange ={props.handleOwner}/><br/>
           <br/>
-          Title of collection:  <input type="text" onChange ={props.handleCollection_Title}/><br/>
-          <br/>
-          Collection image:  <input type="text" onChange ={props.handleCollection_Image}/><br/>
-          <br/>
-          Date url:  <input type="text" onChange ={props.handleData_URL}/><br/>
+          {/* Title of collection:  <input type="text" onChange ={props.handleCollection_Title}/><br/>
+          <br/> */}
+          {/* Collection image:  <input type="text" onChange ={props.handleCollection_Image}/><br/>
+          <br/> */}
+          Data url:  <input type="text" onChange ={props.handleData_URL}/><br/>
           <br/>
           # of Bids:  <input type="number" onChange ={props.handleBid_Count}/><br/>
           <br/>
