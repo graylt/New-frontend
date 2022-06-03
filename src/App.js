@@ -358,63 +358,68 @@ const App = () => {
   return (
     <>
     <main className="wrapper">
-      <header>
-        <div className="navTop">
-        <h1>Cautious Ape</h1>
-
-        <div className='ecoin'>
-        <img src= {ethereum} />
-        {ecoins.map((ecoin) => {
-          if(ecoin.symbol === "ETH") {
-            return <Ecoin ecoin={ecoin} key={ecoin.rank} />
-          } 
-        })}
-        </div>
-
-        <div className='scoin'>
-        <img src= {solana} />
-        {scoins.map((scoin) => {
-          if(scoin.symbol === "SOL") {
-            return <Scoin scoin={scoin} key={scoin.rank} />
-          } 
-        })}
-        </div>
-
-        </div>
-        {
-        (currency === 'ETH')?
-            <div className="navLeft">
-              <h3>Crypto Calculator</h3>
-              <button onClick={bidETH}>ETH Calculator</button>
-              <button onClick={bidSOL}>SOL Calculator</button><br></br>
-
-              <p>ETH: {eths} </p>
-
-              <form>
-                Amount (USD) <input type="number" onChange={handleDollars} /><br />
-                Rate (ETH) <input type="number" step="0.0000000000000001" onChange={handleERate} /><br />
-              </form>
-              <button onClick={calcEths}>Convert to ETH</button><br></br>
+        <header>
+          <div className="navTop">
+            <div className="name">
+              <h1>Cautious Ape</h1>
             </div>
-          :
-            <div className="navLeft">
-              <h3>Crypto Calculator</h3>
-              <button onClick={bidETH}>ETH Calculator</button>
-              <button onClick={bidSOL}>SOL Calculator</button><br></br>
-
-              <p>SOL: {sols} </p>
-
-              <form>
-                Amount (USD) <input type="number" onChange={handleDollars} /><br />
-                Rate (SOL) <input type="number" step="0.0000000000000001" onChange={handleSRate} /><br />
-              </form>
-              <button onClick={calcSols}>Convert to SOL</button><br></br>
+            <img src={ethereum} />
+            <div className='ecoin'>
+              {ecoins.map((ecoin) => {
+                if (ecoin.symbol === "ETH") {
+                  return <Ecoin ecoin={ecoin} key={ecoin.rank} />
+                }
+              })}
             </div>
-        }
-      </header>
+
+            <img src={solana} />
+            <div className='scoin'>
+              {scoins.map((scoin) => {
+                if (scoin.symbol === "SOL") {
+                  return <Scoin scoin={scoin} key={scoin.rank} />
+                }
+              })}
+            </div>
+          </div>
+        </header>
+
+        <aside>
+
+          {
+            (currency === 'ETH') ?
+              <div className="navLeft">
+                <h3>Crypto Calculator</h3>
+                <button onClick={bidETH}>ETH Calculator</button>
+                <button onClick={bidSOL}>SOL Calculator</button><br></br>
+
+                <p>ETH: {eths} </p>
+
+                <form>
+                  Amount (USD) <input type="number" onChange={handleDollars} /><br />
+                  Rate (ETH) <input type="number" step="0.0000000000000001" onChange={handleERate} /><br />
+                </form>
+                <button onClick={calcEths}>Convert to ETH</button><br></br>
+              </div>
+              :
+              <div className="navLeft">
+                <h3>Crypto Calculator</h3>
+                <button onClick={bidETH}>ETH Calculator</button>
+                <button onClick={bidSOL}>SOL Calculator</button><br></br>
+
+                <p>SOL: {sols} </p>
+
+                <form>
+                  Amount (USD) <input type="number" onChange={handleDollars} /><br />
+                  Rate (SOL) <input type="number" step="0.0000000000000001" onChange={handleSRate} /><br />
+                </form>
+                <button onClick={calcSols}>Convert to SOL</button><br></br>
+              </div>
+          }
+
+        </aside>
 
       
-
+<div className="main">
 {/* SHOW NFT */}
         <div className="subheader-container">
         <h2>NFT Watchlist</h2>
@@ -609,6 +614,7 @@ const App = () => {
         </div>
           )
         })}
+        </div>
         </div>
         </main>
     </>
