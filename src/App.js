@@ -10,8 +10,6 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [seeAsset, setSeeAsset] = useState(false)
-
   // api states
   const [assets, setAssets] = useState([])
   const [coins, setCoins] = useState([])
@@ -42,15 +40,24 @@ const App = () => {
   const [sales_count, setSales_Count] = useState()
   const [sales_price, setSales_Price] = useState()
 
-
-
   //submit state
   const [seeNFT, setSeeNFT] = useState(false)
+
+  //update toggle state
+  const [seeAsset, setSeeAsset] = useState(false)
+
+   //edit state
   const [editNFT, setEditNFT] = useState({})
+  const [editView, setEditView] = useState(true)
+
+ const [bids, setBids] = useState() 
+ 
+ const handleChange = (event) => {
+  setBids(event.target.value)
+}
 
 
-
-
+  
 
 
   // form states handle
@@ -126,25 +133,24 @@ const App = () => {
     }
   }
 
-
   const toggleEditAsset = () => {
     if (seeNFT === false) {
       setSeeNFT(true)
     } else {
       setSeeNFT(false)
-      // setPrimary_Image()
+      setEditView(!editView)
+     
+      setPrimary_Image()
       setTitle()
       setEditNFT({})
     }
   }
 
-
-
   //nft post
   const submitAsset = (event) => {
     event.preventDefault()
-    // axios.post('http://localhost:3000/assets', {
-    axios.post('https://still-stream-84605.herokuapp.com/assets', {
+    axios.post('http://localhost:3000/assets', {
+    // axios.post('https://still-stream-84605.herokuapp.com/assets', {
       primary_Image: primary_Image,
       title: title,
       description: description,
@@ -169,8 +175,8 @@ const App = () => {
       sales_count: sales_count, 
       sales_price: sales_price
     }).then(()=>{
-      // axios.get('http://localhost:3000/assets').then((res)=>{
-      axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+      axios.get('http://localhost:3000/assets').then((res)=>{
+      // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
         setAssets(res.data)
         // console.log(res.data)
       })
@@ -178,14 +184,10 @@ const App = () => {
     toggleShowAsset()
     setPrimary_Image()
     setTitle()
+    setArtist()
+    setBid_Count()
+    setBid_Price()
   }
-  
-  // const getAssets = () => {
-  //   axios.get('http://localhost:3000/assets').then((res) => {
-      // console.log(res.data)
-  //     setAssets (res.data)
-  //   })
-  // }
 
   // get request with axios - ethereum/crypto api 
   const getCoins = () => {
@@ -198,8 +200,8 @@ const App = () => {
    // setting up useEffect/invoking get request with axios - ethereum/crypto api 
   useEffect(()=>{
     getCoins()
-    // axios.get('http://localhost:3000/assets').then((res)=>{
-    axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+    axios.get('http://localhost:3000/assets').then((res)=>{
+    // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
       setAssets(res.data)
       
     })
@@ -208,12 +210,12 @@ const App = () => {
   //nft delete
   const handleDelete = (assetsData)=>{
     axios
-        // .delete(`http://localhost:3000/assets/${assetsData._id}`)
-        .delete(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`)
+        .delete(`http://localhost:3000/assets/${assetsData._id}`)
+        // .delete(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`)
         .then(()=>{
             axios
-                //  .get('http://localhost:3000/assets')
-                 .get('https://still-stream-84605.herokuapp.com/assets')
+                 .get('http://localhost:3000/assets')
+                //  .get('https://still-stream-84605.herokuapp.com/assets')
                 .then((res)=>{
                     setAssets(res.data)
                 })
@@ -223,8 +225,8 @@ const App = () => {
   //nft edit
   const handleEdit = (event, assetsData) => {
     event.preventDefault()
-    // axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
-    axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
+    axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
+    // axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
       primary_Image: primary_Image,
       title: title,
       description: description,
@@ -249,29 +251,23 @@ const App = () => {
       sales_count: sales_count, 
       sales_price: sales_price,
     }).then(()=>{
-      //  axios.get('http://localhost:3000/assets').then((res)=>{
-       axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+       axios.get('http://localhost:3000/assets').then((res)=>{
+      //  axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
         setAssets(res.data)
       })
     })
     // setAdditionalImages()
     setEditNFT(assets)
     toggleEditAsset()
-    
+    setBid_Count()
+    setBid_Price()
 }
-
 
   return (
     <>
-
-
-
+    <main className="wrapper">
       <header>
         <h1>Cautious Ape</h1>
-
-        
-     
-
 
 {/* CRYPTO COUNTER */}
 
@@ -286,20 +282,19 @@ const App = () => {
 
 {/* ADD NEW NFT */}
 
-      <div className="show-button">
+      <div className="new-button">
         <button onClick={toggleShowAsset}>
           New NFT
         </button>
         </div>
 
       <div>
-        {seeAsset ? <AddAsset submitAsset={submitAsset} handlePrimary_Image={handlePrimary_Image}/> : ""}
+        {seeAsset ? <AddAsset submitAsset={submitAsset} handlePrimary_Image={handlePrimary_Image} handleTitle={handleTitle} handleBid_Count={handleBid_Count}/> : ""}
       </div>
-          
      
 {/* SHOW NFT */}
 
-      <div>
+      <div className="show-container">
         {assets.map((assets) => {
           return (
             <div key={assets._id}>
@@ -307,32 +302,38 @@ const App = () => {
         <br/>
         Title:{assets.title}<br/>
         <br/>
-        {/* Description:{assets.description}<br/>
+         Description:{assets.description}<br/>
         <br/>
         Date created:{assets.createdDate}<br/>
         <br/>
-        Additonal images:<img src={assets.additionalImages}/><br/>
-        <br/>
+        {/* Additonal images:<img src={assets.additionalImages}/><br/>
+        <br/> */}
         tags:{assets.tags}<br/>
         <br/>
         Artist:{assets.artist}<br/>
         <br/>
         Owner:{assets.owner}<br/>
         <br/>
-        Title of collection:{assets.collection_Title}<br/>
+        {/* Title of collection:{assets.collection_Title}<br/>
         <br/>
         Collection image:{assets.collection_Image}<br/>
-        <br/>
+        <br/> */}
         Data url:{assets.data_URL}<br/>
         <br/>
-        # of Bids:{assets.bid_count}<br/>
+        <form>
+          <select value={assets} onChange={handleChange}>
+           <option value={assets.value}>Bids: {assets.bid_count}</option>
+           <option value={assets.value}>Bid price: {assets.bid_price}</option>
+          </select>
+        </form>
+        {/* # of Bids:{assets.bid_count}<br/>
         <br/>
         Bid price:{assets.bid_price}<br/>
-        <br/>
+        <br/> */}
         # of sales:{assets.sales_count}<br/>
         <br/>
         Sale price:{assets.sales_price}<br/>
-        <br/> */}
+        <br/>
 
 {/* DELETE NFT */}
 
@@ -341,30 +342,20 @@ const App = () => {
 
 {/* EDIT NFT */}
 
-<div>
-        <button onClick={toggleEditAsset}>
-          Edit
-        </button>
-      
-        
+      <div> 
+     <button onClick={() => toggleEditAsset(!editView)}>
+     {/* <p id="edit-button" onClick={toggleEditAsset}> </p>*/}
+       {editView ? 'Edit' : 'Cancel' }
+     </button>  
         </div>
-
       <div>
         {seeNFT ? <EditNFT assets={assets} handleEdit={handleEdit} submitAsset={submitAsset} handleTitle={handleTitle} toggleShowAsset={toggleShowAsset}/> : ""}
-        
       </div>
-
-  
-
-    
-
-
-
-
         </div>
           )
         })}
         </div>
+        </main>
     </>
   )
 }

@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 24px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: .5fr, 1fr, 1fr, 1fr, 1fr, 1fr;
+}
+.show-container {
+  object-fit: contain;
+  display: flex;
+  flex-direction: row;
+  margin-top: 32px;
+  grid-column: 2;
+  justify-content: left;
+}
+
+img {
+  height: 300px;
+  width: 500px;
+  object-fit: contain;
+ 
+}
+
+/* #edit-button :after {
+  content: "Cancel";
+
+} */
