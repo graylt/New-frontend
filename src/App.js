@@ -1,8 +1,13 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
+import ethereum from './components/ethereum.png'
+import solana from './components/solana.png'
+
 import './App.css';
 import {useState, useEffect} from 'react';
 // import Objects from './components/Objects';
-import Coin from './components/Coin';
+// import Coin from './components/Coin';
+import Ecoin from './components/Ecoin';
+import Scoin from './components/Scoin';
 import axios from 'axios';
 
 
@@ -10,7 +15,18 @@ const App = () => {
 
   // api states
   const [assets, setAssets] = useState([])
-  const [coins, setCoins] = useState([])
+  // const [coins, setCoins] = useState([])
+  const [ecoins, setECoins] = useState([]) 
+  const [scoins, setSCoins] = useState([]) 
+   
+
+  // calculator states
+  const [erates, setERates] = useState(1)
+  const [srates, setSRates] = useState(1)
+  const [dollars, setDollars] = useState(0)
+  const [eths, setEths] = useState(0)
+  const [sols, setSols] = useState(0)
+  const [currency, setCurrency] = useState('ETH')
 
   // const[seeAddAsset, setSeeAddAsset] = useState(false)
 
@@ -42,6 +58,37 @@ const App = () => {
   // submit state
   // const [NFT, setNFT] = useState()
 
+
+  // set calculator currency
+  const bidETH = (event) => {
+    setCurrency('ETH')
+  }
+
+  const bidSOL = (event) => {
+    setCurrency('SOL')
+  }
+
+  // calculator states handle
+  const handleDollars = (event) => {
+    setDollars(event.target.value)
+  }
+
+  const handleERate = (event) => {
+    setERates(event.target.value)
+  }
+
+  const handleSRate = (event) => {
+    setSRates(event.target.value)
+  }
+
+  // calculate bids
+  const calcEths = (event) => {
+    setEths(dollars / erates )
+  } 
+
+  const calcSols = (event) => {
+    setSols(dollars / srates )
+  } 
 
   // form states handle
   const handlePrimary_Image = (event) => {
@@ -154,7 +201,9 @@ const App = () => {
   const getCoins = () => {
     axios.get('https://api.coincap.io/v2/assets').then((res) => {
       // console.log(res.data.data)
-      setCoins (res.data.data)
+      // setCoins (res.data.data)
+      setECoins (res.data.data)
+      setSCoins (res.data.data)
     })
   }
 
@@ -219,17 +268,69 @@ const App = () => {
     <>
 
       <header>
+        <div className="navTop">
         <h1>Cautious Ape</h1>
 
-        <div className='coin'>
+        {/* <div className='coins'>
         {coins.map((coin) => {
           if(coin.symbol === "ETH" || coin.symbol === "SOL") {
             return <Coin coin={coin} key={coin.rank} />
-          }
+          } 
+        })}
+        </div> */}
+
+        <div className='ecoin'>
+        <img src= {ethereum} />
+        {ecoins.map((ecoin) => {
+          if(ecoin.symbol === "ETH") {
+            return <Ecoin ecoin={ecoin} key={ecoin.rank} />
+          } 
         })}
         </div>
 
+        <div className='scoin'>
+        <img src= {solana} />
+        {scoins.map((scoin) => {
+          if(scoin.symbol === "SOL") {
+            return <Scoin scoin={scoin} key={scoin.rank} />
+          } 
+        })}
+        </div>
+
+
+        </div>
+        {
+        (currency === 'ETH')?
+            <div className="navLeft">
+              <h3>Crypto Calculator</h3>
+              <button onClick={bidETH}>ETH Calculator</button>
+              <button onClick={bidSOL}>SOL Calculator</button><br></br>
+
+              <p>ETH: {eths} </p>
+
+              <form>
+                Amount (USD) <input type="number" onChange={handleDollars} /><br />
+                Rate (ETH) <input type="number" step="0.0000000000000001" onChange={handleERate} /><br />
+              </form>
+              <button onClick={calcEths}>Convert to ETH</button><br></br>
+            </div>
+          :
+            <div className="navLeft">
+              <h3>Crypto Calculator</h3>
+              <button onClick={bidETH}>ETH Calculator</button>
+              <button onClick={bidSOL}>SOL Calculator</button><br></br>
+
+              <p>SOL: {sols} </p>
+
+              <form>
+                Amount (USD) <input type="number" onChange={handleDollars} /><br />
+                Rate (SOL) <input type="number" step="0.0000000000000001" onChange={handleSRate} /><br />
+              </form>
+              <button onClick={calcSols}>Convert to SOL</button><br></br>
+            </div>
+        }
       </header>
+
 
       <div className="submit-form-container">
         <form onSubmit={submitAsset}>
@@ -271,11 +372,12 @@ const App = () => {
 
 
       <div className="flex-parent-container">
+      <h3>NFT's</h3>
       {assets.map((assets)=>{
-          return <div className="item">
-          <img src={assets.Primary_Image}/><br/>
+          return <div className="item" key={assets._id}>
+          <img src={assets.primary_Image}/><br/>
           <br/>
-          Title:{assets.handlePrice}<br/>
+          Title: {assets.title}<br/>
           <br/>
           Description:{assets.handleDescription}<br/>
           <br/>

@@ -1,7 +1,8 @@
 const Coin = (props) => {
   return (
       <>
-          <p>{props.coin.symbol} {props.coin.priceUsd}</p>
+          {/* <img src={props.character.image}/> */}
+          <p className={props.coin.symbol}>{props.coin.symbol} {props.coin.priceUsd}</p>
       </>
   )
 }
