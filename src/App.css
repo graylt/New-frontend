@@ -81,3 +81,13 @@ img {
   content: "Cancel";
 
 } */
+
+.ecoin img {
+  height: 25px;
+  width: 25px
+}
+
+.scoin img {
+  height: 25px;
+  width: 25px
+}
