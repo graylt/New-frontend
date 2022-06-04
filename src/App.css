@@ -52,8 +52,9 @@ body {
 }
 
 
-.header {
+header {
   grid-area: hd;
+  align-items: center;
 }
 
 .navTop {
@@ -61,6 +62,10 @@ body {
   flex-direction: row;
   justify-content:flex-start;
   align-items: center;
+}
+
+.name {
+  margin: 0 20px 0 0;
 }
 
 aside {
@@ -107,6 +112,7 @@ img {
 } */
 
 .navTop img {
-  height: 25px;
-  width: 25px
+  height: 30px;
+  width: 30px;
+  margin: 0 5px 0 20px;
 }

@@ -363,6 +363,7 @@ const App = () => {
             <div className="name">
               <h1>Cautious Ape</h1>
             </div>
+            
             <img src={ethereum} />
             <div className='ecoin'>
               {ecoins.map((ecoin) => {
