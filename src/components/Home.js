@@ -1,12 +1,12 @@
-const Home = (props) => {
-    return (
-        <>
+// const Home = (props) => {
+//     return (
+//         <>
 
-        </>
+//         </>
 
-    )
-}
+//     )
+// }
   
 
-export default Home
+// export default Home
 
