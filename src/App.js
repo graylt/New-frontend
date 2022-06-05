@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect} from 'react';
-// import Objects from './components/Objects';
+import {useState, useEffect, useMemo} from 'react';
 
 import ethereum from './components/ethereum.png'
 import solana from './components/solana.png'
@@ -15,6 +14,11 @@ import axios from 'axios';
 
 
 const App = () => {
+
+  // // search state
+  // const [query, setQuery] = useState("")
+
+
 
   // api states
   const [assets, setAssets] = useState([])
@@ -38,7 +42,6 @@ const App = () => {
   const bidSOL = (event) => {
     setCurrency('SOL')
   }
-
 
   // calculator states handle
   const handleDollars = (event) => {
@@ -64,12 +67,13 @@ const App = () => {
 
   // form states
   const [bought, setBought] = useState(false)
+  const [sold, setSold] = useState(false)
   const [primary_Image, setPrimary_Image] = useState()
   const [title, setTitle] = useState()
   const [description, setDescription] = useState()
   const [createdDate, setCreatedDate] = useState()
   const [additionalImages, setAdditionalImages] = useState()
-  const [tags, setTags] = useState()
+  const [tags, setTags] = useState([])
 
   // artist or owner info
   const [artist, setArtist] = useState()
@@ -109,6 +113,10 @@ const App = () => {
   // form states handle
   const handleBought = (event) => {
     setBought(event.target.checked)
+  }
+
+  const handleSold = (event) => {
+    setSold(event.target.checked)
   }
 
   const handlePrimary_Image = (event) => {
@@ -183,6 +191,9 @@ const App = () => {
     }
   }
 
+
+  
+
   const toggleEditAsset = () => {
     if (seeNFT === false) {
       setSeeNFT(true)
@@ -190,8 +201,9 @@ const App = () => {
       setSeeNFT(false)
       setEditView(!editView)
       setEditNFT({})
+      setBought()
+      setSold()
       setPrimary_Image()
-      // setBought()
       setTitle()
       setDescription()
       // setCreatedDate()
@@ -209,12 +221,14 @@ const App = () => {
     }
   }
 
+
   //nft post
   const submitAsset = (event) => {
     event.preventDefault()
     axios.post('http://localhost:3000/assets', {
     // axios.post('https://still-stream-84605.herokuapp.com/assets', {
       bought: bought,
+      sold: sold,
       primary_Image: primary_Image,
       title: title,
       description: description,
@@ -247,6 +261,7 @@ const App = () => {
     })
     toggleShowAsset()
     setBought()
+    setSold()
     setPrimary_Image()
     setTitle()
     setDescription()
@@ -280,7 +295,7 @@ const App = () => {
     axios.get('http://localhost:3000/assets').then((res)=>{
     // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
       setAssets(res.data)
-      
+      // setAssetList(assets)
     })
   },[])
 
@@ -305,6 +320,7 @@ const App = () => {
     axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
     // axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
       bought: bought,
+      sold: sold,
       primary_Image: primary_Image,
       title: title,
       description: description,
@@ -339,6 +355,7 @@ const App = () => {
     toggleEditAsset()
     setPrimary_Image()
     setBought()
+    setSold()
     setTitle()
     setDescription()
     setCreatedDate()
@@ -359,32 +376,46 @@ const App = () => {
     <>
     <main className="wrapper">
         <header>
-          <div className="navTop">
-            <div className="name">
               <h1>Cautious Ape</h1>
+{/* ADD NEW NFT */}
+            <div className="asset-button-container">
+                <button className="asset-button" onClick={toggleShowAsset}>
+                Add NFT
+                </button>
             </div>
+        </header>
+
+{/* MARQUEE */}
+        <div className="marquee-container">
+          <marquee>
+            <ul className="coinList"> 
+              <li>
+              <div className='ecoin'>
             <img src={ethereum} />
-            <div className='ecoin'>
               {ecoins.map((ecoin) => {
                 if (ecoin.symbol === "ETH") {
                   return <Ecoin ecoin={ecoin} key={ecoin.rank} />
                 }
               })}
             </div>
-
+              </li>
+        <li>
+        <div className='scoin'>
             <img src={solana} />
-            <div className='scoin'>
               {scoins.map((scoin) => {
                 if (scoin.symbol === "SOL") {
                   return <Scoin scoin={scoin} key={scoin.rank} />
                 }
               })}
             </div>
+        </li>
+            </ul>
+          </marquee>
           </div>
-        </header>
 
-        <aside>
+{/* CALCULATOR */}
 
+        <aside className="aside-container">
           {
             (currency === 'ETH') ?
               <div className="navLeft">
@@ -415,26 +446,42 @@ const App = () => {
                 <button onClick={calcSols}>Convert to SOL</button><br></br>
               </div>
           }
-
         </aside>
 
+
+        {/* <div>
+      <input placeholder="Enter" onChange={event => setQuery(event.target.value)}/>
+    
+      {
+        assets.filter(assets => {
+          if (query === '') {
+            return assets;
+          } else if (assets.sold.toLowerCase().includes(query.toLowerCase())) {
+            return assets;
+          }
+        })
+          .map((assets) => (
+            <div key={assets._id}>
+              <p>{assets.bought}</p>
+              <p>{assets.sold}</p>
+            </div>
+          ))
+      }
+    </div> */}
+
+
+
       
-<div className="main">
+<div className="content-container">
 {/* SHOW NFT */}
         <div className="subheader-container">
-        <h2>NFT Watchlist</h2>
-
-        {/* ADD NEW NFT */}
-
-      <div className="new-button">
-        <button onClick={toggleShowAsset}>
-          Add NFT
-        </button>
+        <h2>NFT Watchlist &#x21AF;</h2>
         </div>
       <div>
         {seeAsset ? <AddAsset 
         submitAsset={submitAsset} 
         handleBought={handleBought} 
+        handleSold={handleSold}  
         handlePrimary_Image={handlePrimary_Image} 
         handleTitle={handleTitle}
         handleDescription={handleDescription}
@@ -452,23 +499,23 @@ const App = () => {
         handleSales_Price={handleSales_Price}
         /> : ""}
       </div>
-
-        </div>
         
       <div className="show-container">
+
         {assets.map((assets) => {
           return (
             <div key={assets._id}>
-                   <img src={assets.primary_Image}/><br/>
-        <br/>
-        <h3>Bought:{assets.bought}</h3><br/>
+                   <img className="content-img" src={assets.primary_Image}/>
+        <div className="form-container">
+        <h3 className="status">{(assets.bought) ? "Bought" : "" }</h3>
+        <h3>{(assets.sold) ? "Sold" : "" }</h3>
 
 {/* DETAILS SELECT FORM */}
-
+        {/* <div className="form-container"> */}
         <form>
-        <select value={assets} onChange={handleChange}>
+        <select className="details" value={assets} onChange={handleChange}>
         <option defaultValue="Details">
-             Details
+             Details &#x22EF;
            </option>
            <option value={assets.value}>
              Title: {assets.title}
@@ -502,43 +549,16 @@ const App = () => {
            </option>
         </select>
         </form>
-
-{/* BEFORE SELECT FORM */}
-
-              {/* Title:{assets.title}<br/>
-        <br/> */}
-        {/* Artist:{assets.artist}<br/>
-        <br/> */}
-         {/* Description:{assets.description}<br/>
-        <br/> */}
-        {/* Date created:{assets.createdDate}<br/>
-        <br/> */}
-        {/* Additonal images:<img src={assets.additionalImages}/><br/>
-        <br/> */}
-        {/* Owner:{assets.owner}<br/>
-        <br/> */}
-        {/* Title of collection:{assets.collection_Title}<br/>
-        <br/>
-        Collection image:{assets.collection_Image}<br/>
-        <br/> */}
-        {/* tags:{assets.tags}<br/>
-        <br/> */}
-         {/* <br/>
-        # of sales:{assets.sales_count}<br/>
-        <br/>
-        Sale price:{assets.sales_price}<br/>
-        <br/> */}
     
 {/* BID SELECT FORM */}
 
-        <a href={assets.data_URL}>
+        {/* <a href={assets.data_URL}>
           Buy
-        </a>
-        <br/>
+        </a> */}
         <form>
-          <select value={assets} onChange={handleChange}>
+          <select className="bids" value={assets} onChange={handleChange}>
            <option defaultValue="Bids">
-             Bids
+             Bids &#x22EF;
            </option>
            <option value={assets.value}>
              Bids: {assets.bid_count}
@@ -548,18 +568,13 @@ const App = () => {
            </option>
           </select>
         </form>
-        <br/>
         
 {/* SALE SELECT FORM */}
-
-        <a href={assets.data_URL}>
-          Sell
-        </a>
-        <br/>
+  
         <form>
-          <select value={assets} onChange={handleChange}>
+          <select className="sales" value={assets} onChange={handleChange}>
           <option defaultValue="Sales">
-             Sales
+             Sales &#x22EF;
            </option>
            <option value={assets.value}>
              Sales: {assets.sales_count}
@@ -569,23 +584,35 @@ const App = () => {
            </option>
           </select>
         </form>
-        <br/>
+        <div className="buy-sell-buttons">
+          
+        <a href={assets.data_URL}>
+          Buy &#x2197;
+        </a>
+        
+        <a href={assets.data_URL}>
+          Sell &#x2197;
+        </a>
+       
+        </div>
+        
 
-{/* DELETE NFT */}
-
-        <button onClick={(event)=>{handleDelete(assets)}}>
+        {/* <button onClick={(event)=>{handleDelete(assets)}}>
           Remove NFT
-        </button>
-        <br/>
-          <br/>
+        </button> */}
 
+      <div className="edit-remove-buttons">
 {/* EDIT NFT */}
 
-      <div> 
-     <button onClick={() => toggleEditAsset(!editView)}>
+     <button className="edit-button" onClick={() => toggleEditAsset(!editView)}>
      {/* <p id="edit-button" onClick={toggleEditAsset}> </p>*/}
        {editView ? 'Edit' : 'Cancel' }
-     </button>  
+     </button> 
+{/* DELETE NFT */}
+     <button className="remove-button" onClick={(event)=>{handleDelete(assets)}}>
+          Remove
+        </button>
+       
         </div>
       <div>
         {seeNFT ? <EditNFT 
@@ -593,9 +620,10 @@ const App = () => {
         handleEdit={handleEdit} 
         submitAsset={submitAsset}  
         toggleShowAsset={toggleShowAsset}
+        handleBought={handleBought}
+        handleSold={handleSold}
         // handlePrimary_Image={handlePrimary_Image} 
-        handleTitle={handleTitle} 
-        handleBought={handleBought} 
+        handleTitle={handleTitle}  
         handleDescription={handleDescription} 
         // handleCreatedDate={handleCreatedDate} 
         // handleAdditionalImages={handleAdditionalImages} 
@@ -612,6 +640,7 @@ const App = () => {
         /> : ""}
       </div>
         </div>
+        </div>
           )
         })}
         </div>
@@ -622,3 +651,4 @@ const App = () => {
 }
 
 export default App;
+

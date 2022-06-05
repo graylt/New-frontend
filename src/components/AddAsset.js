@@ -6,6 +6,8 @@ const newAsset = (props) => {
         <form onSubmit={props.submitAsset}>
           Bought:  <input type="checkbox" onChange={props.handleBought}/><br/>
           <br/>
+          Sold:  <input type="checkbox" onChange={props.handleSold}/><br/>
+          <br/>
           Image: <input type="url" onChange={props.handlePrimary_Image}/><br/>
           <br/>
           Title:  <input type="text" onChange={props.handleTitle}/><br/>

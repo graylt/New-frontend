@@ -1,4 +1,6 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap');
+
+/* .App {
   text-align: center;
 }
 
@@ -35,56 +37,107 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 body {
-  margin: 24px;
+  font-family: 'Work Sans', sans-serif;
 }
+
+
+
 
 .wrapper {
   display: grid;
-  /* grid-template-columns: 1fr, 1fr; */
-  grid-template-columns: 30% auto;
-  grid-template-rows: 100px auto;
-  grid-template-areas: "hd hd"
-                       "sidebar main";
-  row-gap: 24px;
+  grid-template-columns: repeat(4, [col]);
+  grid-template-rows: repeat(2, [row] auto  );
+  /* grid-template-areas:"header header"
+                      "sidebar content"
+                      "footer footer"; */
+
+  gap: 24px;
+}
+
+header {
+  display: grid;
+  grid-column: 1 / span 4;
+  background-color: rgb(245, 65, 21);
+  padding: 24px;
+  position: sticky;
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 400;
+}
+
+.asset-button-container {
+  float: right;
+  /* line-height: 56px; */
+  grid-column: 4;
+  
+}
+.asset-button{
+  float: right;
+  border: none;
+  background: none;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 
-.header {
-  grid-area: hd;
-}
-
-.navTop {
+/* .navTop {
   display: flex;
   flex-direction: row;
   justify-content:flex-start;
   align-items: center;
+} */
+
+
+.name {
+  margin: 0 20px 0 0;
 }
 
 aside {
   grid-area: sidebar;
+  grid-column: col;
 }
 
-.main {
-  grid-area: main;
-}
-
-/* .subheader-container {
+.content-container {
+  display: grid;
+  grid-column: col 3;
+  grid-row: row 3;
+  grid-template-columns: 1fr;
+  /* background-color: bisque; */
+  align-content: right;
+  padding: 24px;
+  border: 1px solid black;
   
-} */
+}
+
+.subheader-container {
+  grid-column: col 1 / 3;
+  grid-row: row;
+  margin-bottom: 32px;
+}
+
+.content-img {
+  height: 400px;
+  width: 800px;
+  object-fit: contain;
+  margin-bottom: 24px;;
+
+
+}
+
 
 .show-container {
-  width: 4em;
-  object-fit: contain;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 24px;
-  grid-column: 2;
-  justify-content: start;
-}
+  grid-column:  col 1 / 3;
+  grid-row: row 2;
+  justify-items: center;
+ 
+} 
 
 /* .asset-container {
 
@@ -93,20 +146,148 @@ aside {
 } */
 
 
-
-img {
-  height: 300px;
-  width: 500px;
+/* img {
+  height: 400px;
+  width: 800px;
   object-fit: contain;
  
+} */
+
+img {
+  height: 30px;
+  width: 30px;
+  margin: 0 5px 0 20px;
 }
+
+.marquee-container {
+  grid-column: 1 / span 4;
+  grid-row: row 2;
+  height: 60px;
+  margin-bottom: 32px;
+  margin-top: -40px;
+  
+}
+
+marquee {
+  border-bottom: 1px solid black;
+  height: 140px;
+
+}
+
+
+.coinList {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-start; */
+  list-style: none;
+  /* padding: 0; */
+  /* white-space: nowrap; */
+}
+
+li {
+  padding: 24px;
+}
+
+.ecoin {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+
+}
+
+.scoin {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+
+}
+
+.form-container {
+  display: grid;
+  margin-bottom: 56px;
+  width: 800px;
+  /* border: 1px solid black; */
+}
+
+.status {
+  margin-bottom: -8px;
+}
+.details {
+  margin-bottom: 24px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.bids {
+  margin-bottom: 24px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.sales {
+  margin-bottom: 24px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* .help {cursor: help;} */
+
+select {
+  border: none;
+  background: none;
+  appearance: none;
+  font-family: 'Work Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  /* background-color: red; */
+  text-align: left;
+  width: 80px;
+  padding: 16px;
+  
+  
+  
+}
+
+.buy-sell-buttons {
+  margin-top: 32px;
+  
+}
+.edit-remove-buttons {
+  margin-top: 32px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+}
+.edit-button {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  width: 392px;
+  background: none;
+  border: .5px solid black;
+  height: 32px;
+  margin-right: 8px;
+  font-weight: 600;
+}
+.remove-button {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  width: 392px;
+  background: black;
+  color: white;
+  border: .5px solid black;
+  height: 32px;
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+
 
 /* #edit-button :after {
   content: "Cancel";
 
 } */
 
-.navTop img {
-  height: 25px;
-  width: 25px
-}
+
+/* .sort-container {
+  display: none;
+
+} */
+
