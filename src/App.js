@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect, useMemo} from 'react';
+import {useState, useEffect} from 'react';
 
 import ethereum from './components/ethereum.png'
 import solana from './components/solana.png'
@@ -10,15 +10,11 @@ import Scoin from './components/Scoin';
 // import Coin from './components/Coin';
 import AddAsset from './components/AddAsset';
 import EditNFT from './components/EditNFT';
+import Modal from './components/Modal';
 import axios from 'axios';
 
 
 const App = () => {
-
-  // // search state
-  // const [query, setQuery] = useState("")
-
-
 
   // api states
   const [assets, setAssets] = useState([])
@@ -101,6 +97,22 @@ const App = () => {
    //edit state
   const [editNFT, setEditNFT] = useState({})
   const [editView, setEditView] = useState(true)
+
+  // modal
+  const [show, setShow] = useState(false)
+  // const [open, setOpen] = useState(false)
+
+  // const handleClose = () => {
+  //   setOpen(false)
+  // }
+  // const handleOpen = () => {
+  //   setOpen(true)
+  // }
+
+
+
+  // search state
+  const [query, setQuery] = useState("")
 
 
   // handle for select form
@@ -449,26 +461,6 @@ const App = () => {
         </aside>
 
 
-        {/* <div>
-      <input placeholder="Enter" onChange={event => setQuery(event.target.value)}/>
-    
-      {
-        assets.filter(assets => {
-          if (query === '') {
-            return assets;
-          } else if (assets.sold.toLowerCase().includes(query.toLowerCase())) {
-            return assets;
-          }
-        })
-          .map((assets) => (
-            <div key={assets._id}>
-              <p>{assets.bought}</p>
-              <p>{assets.sold}</p>
-            </div>
-          ))
-      }
-    </div> */}
-
 
 
       
@@ -476,6 +468,27 @@ const App = () => {
 {/* SHOW NFT */}
         <div className="subheader-container">
         <h2>NFT Watchlist &#x21AF;</h2>
+
+{/* SEARCH */}
+<div className="search">
+      <input className="search-container" placeholder="Search 	&#x1F50E;" onChange={event => setQuery(event.target.value)}/>
+    
+      {
+        assets.filter(assets => {
+          if (query === '') {
+            return assets;
+          } else if (assets.artist.toLowerCase().includes(query.toLowerCase())) {
+            return assets;
+          }
+        })
+          .map((assets) => (
+            <div className="search-list" key={assets._id}>
+              <p>{assets.bought}</p>
+              <p>{assets.artist}</p>
+            </div>
+          ))
+      }
+    </div>
         </div>
       <div>
         {seeAsset ? <AddAsset 
@@ -552,9 +565,6 @@ const App = () => {
     
 {/* BID SELECT FORM */}
 
-        {/* <a href={assets.data_URL}>
-          Buy
-        </a> */}
         <form>
           <select className="bids" value={assets} onChange={handleChange}>
            <option defaultValue="Bids">
@@ -593,27 +603,28 @@ const App = () => {
         <a href={assets.data_URL}>
           Sell &#x2197;
         </a>
-       
         </div>
         
 
-        {/* <button onClick={(event)=>{handleDelete(assets)}}>
-          Remove NFT
-        </button> */}
 
       <div className="edit-remove-buttons">
 {/* EDIT NFT */}
-
-     <button className="edit-button" onClick={() => toggleEditAsset(!editView)}>
+<div className="edit-modal-button">
+     <button onClick={() => setShow(true) }>Edit
+     {/* <button className="edit-button" onClick={() => toggleEditAsset(!editView)}> */}
      {/* <p id="edit-button" onClick={toggleEditAsset}> </p>*/}
-       {editView ? 'Edit' : 'Cancel' }
-     </button> 
+       {/* {editView ? 'Edit' : 'Cancel' } */}
+     </button>
+     <Modal titel="My Modal" onClose={() => setShow(false)} show={show}>
+     <p>This is modal body</p>
+     </Modal>
+     </div>
 {/* DELETE NFT */}
      <button className="remove-button" onClick={(event)=>{handleDelete(assets)}}>
           Remove
         </button>
-       
         </div>
+       
       <div>
         {seeNFT ? <EditNFT 
         assets={assets} 
