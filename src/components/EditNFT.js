@@ -2,7 +2,9 @@ const EditNFT = (props) => {
     return (
       <div>
         <form onSubmit={(event)=>{props.handleEdit(event, props.assets)}}>
-        Bought:  <input type="checkbox" onChange={props.handleBought} placeholder={props.assets.bought}/><br/>
+        Bought:  <input type="checkbox" onChange={props.handleBought} /><br/>
+          <br/>
+        Sold:  <input type="checkbox" onChange={props.handleSold} defaultChecked="checked"/><br/>
           <br/>
          {/* Image: <input type="text" onChange={props.handlePrimary_Image} placeholder={props.assets.primary_Image}/><br/>
         <br/>  */}
