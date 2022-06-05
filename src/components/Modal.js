@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+// import EditNFT 'from './EditNFT';
 
 const Modal = (props) => {
 

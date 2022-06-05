@@ -43,9 +43,6 @@ body {
   font-family: 'Work Sans', sans-serif;
 }
 
-
-
-
 .wrapper {
   display: grid;
   grid-template-columns: repeat(4, [col]);
@@ -57,12 +54,15 @@ body {
   gap: 24px;
 }
 
+/* TOP NAV/HEADER */
+
 header {
   display: grid;
   grid-column: 1 / span 4;
   background-color: rgb(245, 65, 21);
   padding: 24px;
   position: sticky;
+  /* border: 1px solid black; */
 }
 
 h1 {
@@ -70,11 +70,15 @@ h1 {
   font-weight: 400;
 }
 
+h3 {
+  font-size: 32px;
+  font-weight: 900;
+}
+
 .asset-button-container {
   float: right;
   /* line-height: 56px; */
   grid-column: 4;
-  
 }
 
 .asset-button{
@@ -87,101 +91,11 @@ h1 {
   cursor: pointer;
 }
 
-
-/* .navTop {
-  display: flex;
-  flex-direction: row;
-  justify-content:flex-start;
-  align-items: center;
-} */
-
-
-.name {
-  margin: 0 20px 0 0;
-}
-
-aside {
-  grid-area: sidebar;
-  grid-column: col;
-}
-
-.content-container {
-  display: grid;
-  grid-column: col 3;
-  grid-row: row 3;
-  grid-template-columns: 1fr;
-  /* background-color: bisque; */
-  align-content: right;
-  padding: 24px;
-  border: 1px solid black;
-  
-}
-
-.subheader-container {
-  grid-column: col 1 / 3;
-  grid-row: row;
-  margin-bottom: 32px;
-}
-
-.search {
-  float: right;
-  grid-column: 2;
-  margin-top: -48px;
-  
-}
-
-.search-container {
-  background: none;
-  border: none;
-  font-family: 'Work Sans', sans-serif;
-  font-weight: 600;
-}
-
-.search-list {
-  display: none;
-}
-
-::placeholder {
-  color: black;
-}
-
-.search-list {
-  display: hidden;
-}
-
-
-.content-img {
-  height: 400px;
-  width: 800px;
-  object-fit: contain;
-  margin-bottom: 24px;;
-}
-
-
-.show-container {
-  grid-column:  col 1 / 3;
-  grid-row: row 2;
-  justify-items: center;
- 
-} 
-
-/* .asset-container {
-
-  margin-bottom: 32px;
- 
-} */
-
-
-/* img {
-  height: 400px;
-  width: 800px;
-  object-fit: contain;
- 
-} */
+/* MARQUEE */
 
 img {
-  height: 30px;
-  width: 30px;
+  height: 32px;
+  width: 32px;
   margin: 0 5px 0 20px;
 }
 
@@ -191,15 +105,12 @@ img {
   height: 60px;
   margin-bottom: 32px;
   margin-top: -40px;
-  
 }
 
 marquee {
   border-bottom: 1px solid black;
   height: 140px;
-
 }
-
 
 .coinList {
   display: flex;
@@ -216,49 +127,260 @@ li {
 
 .ecoin {
   font-family: 'Work Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 24px;
 
 }
 
 .scoin {
   font-family: 'Work Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 24px;
 
+}
+
+/* CALCULATOR */
+
+.navLeft {
+  margin: 24px;
+}
+
+.navLeft-header {
+  margin-top: 24px;
+}
+
+.name {
+  margin: 0 20px 0 0;
+}
+
+aside {
+  display: grid;
+  grid-area: sidebar;
+  grid-column: 1 / span 3;
+  border: 1px solid black;
+  border-right: none;
+  /* margin-top: 24px; */
+}
+
+.ETH-calc-button {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  width: 392px;
+  background: black;
+  color: white;
+  border: .5px solid white;
+  height: 32px;
+  margin-right: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 24px;
+  margin-bottom: 16px;
+
+}
+
+.SOL-calc-button {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  width: 392px;
+  background: black;
+  color: white;
+  border: .5px solid white;
+  height: 32px;
+  margin-right: 8px;
+  font-weight: 600;
+  cursor: pointer;
+
+}
+
+.SOL-calc-button:hover {
+  background-color: white;
+  color: black;
+  border: .5px solid black;
+}
+
+.ETH-calc-button:hover {
+  background-color: white;
+  color: black;
+  border: .5px solid black;
+
+}
+
+.conversion-container {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.conversion-form-container {
+  font-weight: 600;
+}
+
+.conversion-equals {
+  margin-right: 8px;
+  font-weight: 400;
+}
+
+.convert-button {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  width: 392px;
+  background: none;
+  color: black;
+  border: 1px solid black;
+  height: 32px;
+  margin-right: 8px;
+  margin-top: 32px;
+  font-weight: 600;
+  cursor: pointer;
+
+}
+
+.USD-container {
+  font-size: 32px;
+  font-weight: 400;
+  background: none;
+  border: .5px solid black;
+  border-right: none;
+  border-top: none;
+  border-left: none;
+  margin-bottom: 32px;
+  width: 400px;
+}
+
+.rate-container {
+  font-size: 32px;
+  font-weight: 900;
+  background: none;
+  border: .5px solid black;
+  border-right: none;
+  border-top: none;
+  border-left: none;
+  margin-bottom: 32px;
+  width: 400px;
+}
+
+span {
+  font-size: 24px;
+}
+
+.span-container {
+ text-align: center;
+}
+/* CONTENT */
+
+.content-container {
+  display: grid;
+  grid-column: col 3;
+  grid-row: row 3;
+  grid-template-columns: 1fr;
+  /* background-color: bisque; */
+  align-content: right;
+  padding: 24px;
+  border: 1px solid black;
+  
+}
+
+.subheader-container {
+  grid-column: col 1 / 3;
+  grid-row: row;
+  margin-bottom: 64px;
+  /* margin-left: -104px; */
+}
+
+.search {
+  float: right;
+  grid-column: 3;
+  margin-top: -48px;
+  
+}
+
+.search-container {
+  background: none;
+  /* border: none; */
+  border: .5px solid black;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px;
+}
+
+.search-list {
+  display: none;
+}
+
+::placeholder {
+  color: black;
+}
+
+/* FORM CONTENT */
+
+.content-img {
+  height: 400px;
+  width: 800px;
+  object-fit: contain;
+  margin-bottom: 24px;
 }
 
 .form-container {
   display: grid;
   margin-bottom: 56px;
   width: 800px;
-  /* border: 1px solid black; */
 }
+
+.show-container {
+  grid-column:  col 1 / 3;
+  grid-row: row 2;
+  justify-items: center;
+} 
 
 .status {
   margin-bottom: -8px;
+  /* width: 392px; */
+  margin-right: 238px;
 }
+
 .details {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   cursor: pointer;
   font-size: 16px;
+  width: 800px;
 }
+
 .bids {
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   cursor: pointer;
   font-size: 16px;
+  width: 392px;
+  margin-right: 8px;
 }
 .sales {
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   cursor: pointer;
   font-size: 16px;
+  width: 392px;
+  margin-left: 8px;
+}
+.buy-link {
+  /* margin-bottom: 24px; */
+  cursor: pointer;
+  font-size: 16px;
+  width: 392px;
+  margin-left: -24px;
+}
+.sell-link {
+  /* margin-bottom: 24px; */
+  cursor: pointer;
+  font-size: 16px;
+  width: 392px;
+  /* margin-left: 8px; */
 }
 
-/* .help {cursor: help;} */
-
 select {
-  border: none;
+  border: 1px solid black;
   background: none;
+  height: 32px;
   appearance: none;
   font-family: 'Work Sans', sans-serif;
+  padding:  0 8px 0;
 }
 
 a {
@@ -268,20 +390,41 @@ a {
   text-align: left;
   width: 80px;
   padding: 16px;
-  
-  
-  
+
 }
 
 .buy-sell-buttons {
   margin-top: 32px;
-  
 }
+
+.status-details-container {
+  justify-content: left;
+}
+
+.status-details-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin-left: -62px;
+}
+
+.bids-sales-container {
+  display: flex;
+  flex-direction: row;
+}
+.buy-sell-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .edit-remove-buttons {
   margin-top: 32px;
   font-family: 'Work Sans', sans-serif;
   font-size: 16px;
+  display: flex;
+  flex-direction: row;
 }
+
 .edit-button {
   font-family: 'Work Sans', sans-serif;
   font-size: 16px;
@@ -291,7 +434,9 @@ a {
   height: 32px;
   margin-right: 8px;
   font-weight: 600;
+  cursor: pointer;
 }
+
 .remove-button {
   font-family: 'Work Sans', sans-serif;
   font-size: 16px;
@@ -302,7 +447,15 @@ a {
   height: 32px;
   margin-left: 8px;
   font-weight: 600;
+  cursor: pointer;
 }
+
+.remove-button:hover {
+  background-color: rgb(245, 65, 21);
+  color: black;
+}
+
+/* MODAL */
 
 .modal {
   position: fixed;
@@ -334,18 +487,4 @@ a {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
 }
-
-
-
-
-/* #edit-button :after {
-  content: "Cancel";
-
-} */
-
-
-/* .sort-container {
-  display: none;
-
-} */
 

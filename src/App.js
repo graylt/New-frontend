@@ -100,23 +100,13 @@ const App = () => {
 
   // modal
   const [show, setShow] = useState(false)
-  // const [open, setOpen] = useState(false)
-
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
-  // const handleOpen = () => {
-  //   setOpen(true)
-  // }
-
-
-
+ 
   // search state
   const [query, setQuery] = useState("")
 
 
   // handle for select form
- const [bids, setBids] = useState() 
+//  const [bids, setBids] = useState() 
  
  const handleChange = (event) => {
   // setBids(event.target.value)
@@ -365,6 +355,7 @@ const App = () => {
     // setAdditionalImages()
     setEditNFT(assets)
     toggleEditAsset()
+    // setShow(true)
     setPrimary_Image()
     setBought()
     setSold()
@@ -431,47 +422,58 @@ const App = () => {
           {
             (currency === 'ETH') ?
               <div className="navLeft">
-                <h3>Crypto Calculator</h3>
-                <button onClick={bidETH}>ETH Calculator</button>
-                <button onClick={bidSOL}>SOL Calculator</button><br></br>
+                <h2 className="navLeft-header">Crypto Calculator</h2>
+                <p>Select the amount and crypto currency you would like to convert</p>
+                <button className="ETH-calc-button" onClick={bidETH}>ETH Calculator</button>
+                <button className="SOL-calc-button" onClick={bidSOL}>SOL Calculator</button><br></br>
 
-                <p>ETH: {eths} </p>
+                <p className="conversion-container">ETH <span className="conversion-equals">&#x3D;</span>
+{eths} </p>
 
-                <form>
-                  Amount (USD) <input type="number" onChange={handleDollars} /><br />
-                  Rate (ETH) <input type="number" step="0.0000000000000001" onChange={handleERate} /><br />
+                <form className="conversion-form-container">
+                  Amount (USD) <input className="USD-container" type="number" onChange={handleDollars} /><br />
+                  
+                  <div className="span-container">
+                  <span>&#8645;</span><br/><br/>
+                  </div>
+                  
+                  
+                  Rate (ETH) <input className="rate-container" type="number" step="0.0000000000000001" onChange={handleERate} /><br />
                 </form>
-                <button onClick={calcEths}>Convert to ETH</button><br></br>
+                <button className="convert-button" onClick={calcEths}>Convert to ETH</button><br></br>
               </div>
               :
               <div className="navLeft">
                 <h3>Crypto Calculator</h3>
-                <button onClick={bidETH}>ETH Calculator</button>
-                <button onClick={bidSOL}>SOL Calculator</button><br></br>
+                <button className="ETH-calc-button" onClick={bidETH}>ETH Calculator</button>
+                <button className="SOL-calc-button" onClick={bidSOL}>SOL Calculator</button><br></br>
 
-                <p>SOL: {sols} </p>
+                <p className="conversion-container">SOL <span className="conversion-equals">&#x3D;</span> {sols} </p>
 
-                <form>
-                  Amount (USD) <input type="number" onChange={handleDollars} /><br />
-                  Rate (SOL) <input type="number" step="0.0000000000000001" onChange={handleSRate} /><br />
+                <form className="conversion-form-container">
+                  Amount (USD) <input className="USD-container" type="number" onChange={handleDollars} /><br />
+
+                  <div className="span-container">
+                  <span>&#8645;</span><br/><br/>
+                  </div>
+
+                  Rate (SOL) <input className="rate-container" type="number" step="0.0000000000000001" onChange={handleSRate} /><br />
                 </form>
-                <button onClick={calcSols}>Convert to SOL</button><br></br>
+                <button className="convert-button" onClick={calcSols}>Convert to SOL</button><br></br>
               </div>
           }
         </aside>
 
-
-
-
-      
-<div className="content-container">
 {/* SHOW NFT */}
+
+<div className="content-container">
         <div className="subheader-container">
         <h2>NFT Watchlist &#x21AF;</h2>
 
 {/* SEARCH */}
+
 <div className="search">
-      <input className="search-container" placeholder="Search 	&#x1F50E;" onChange={event => setQuery(event.target.value)}/>
+      <input className="search-container" placeholder="Search" onChange={event => setQuery(event.target.value)}/>
     
       {
         assets.filter(assets => {
@@ -490,6 +492,9 @@ const App = () => {
       }
     </div>
         </div>
+
+{/* ADD NFT TOGGLE */}
+
       <div>
         {seeAsset ? <AddAsset 
         submitAsset={submitAsset} 
@@ -520,12 +525,20 @@ const App = () => {
             <div key={assets._id}>
                    <img className="content-img" src={assets.primary_Image}/>
         <div className="form-container">
-        <h3 className="status">{(assets.bought) ? "Bought" : "" }</h3>
-        <h3>{(assets.sold) ? "Sold" : "" }</h3>
+        {/* <div className="status-details-container"> */}
+          {/* <ul className="status-details-list"> */}
+        {/* <li> */}
+          <h3 className="status">{(assets.bought) ? "Bought" : "" }</h3>
+        {/* </li> */}
+        {/* <li> */}
+          <h3>{(assets.sold) ? "Sold" : "" }</h3>
+          {/* </li> */}
 
 {/* DETAILS SELECT FORM */}
+
         {/* <div className="form-container"> */}
-        <form>
+        {/* <li> */}
+          <form>
         <select className="details" value={assets} onChange={handleChange}>
         <option defaultValue="Details">
              Details &#x22EF;
@@ -562,9 +575,12 @@ const App = () => {
            </option>
         </select>
         </form>
+        {/* </li>
+        </ul>
+        </div> */}
     
 {/* BID SELECT FORM */}
-
+<div className="bids-sales-container">
         <form>
           <select className="bids" value={assets} onChange={handleChange}>
            <option defaultValue="Bids">
@@ -594,37 +610,89 @@ const App = () => {
            </option>
           </select>
         </form>
+        </div>
         <div className="buy-sell-buttons">
           
-        <a href={assets.data_URL}>
+          <div className="buy-sell-container">
+        <a className="buy-link" href={assets.data_URL}>
           Buy &#x2197;
         </a>
         
-        <a href={assets.data_URL}>
+        <a className="sell-link" href={assets.data_URL}>
           Sell &#x2197;
         </a>
         </div>
+        </div>
         
 
+{/* EDIT NFT */}
 
       <div className="edit-remove-buttons">
-{/* EDIT NFT */}
-<div className="edit-modal-button">
-     <button onClick={() => setShow(true) }>Edit
+      <div className="edit-modal-button">
+    <button className="edit-button" onClick={() => {
+      // setShow(true);
+      toggleEditAsset();
+
+     }}>Edit
      {/* <button className="edit-button" onClick={() => toggleEditAsset(!editView)}> */}
      {/* <p id="edit-button" onClick={toggleEditAsset}> </p>*/}
        {/* {editView ? 'Edit' : 'Cancel' } */}
      </button>
-     <Modal titel="My Modal" onClose={() => setShow(false)} show={show}>
-     <p>This is modal body</p>
+     <Modal title="My Modal" onClose={() => setShow(false)} show={show}>
+     {/* <p> */}
+     <div>
+        <form onSubmit={(event)=>{handleEdit(event, assets)}}>
+        Bought:  <input type="checkbox" onChange={handleBought} /><br/>
+          <br/>
+        Sold:  <input type="checkbox" onChange={handleSold} defaultChecked="checked"/><br/>
+          <br/>
+         {/* Image: <input type="text" onChange={props.handlePrimary_Image} placeholder={props.assets.primary_Image}/><br/>
+        <br/>  */}
+        Title:  <input type="text" onChange={handleTitle} placeholder={assets.title}/><br/>
+        <br/>
+         Description: <input type="text" onChange={handleDescription} placeholder={assets.description}/><br/>
+        <br/>
+        {/* Date created: <input type="text" onChange={props.handleCreatedDate}/><br/>
+        <br/> */}
+        {/* Additonal images: <input type="text" onChange ={props.handleAdditionalImages}/><br/>
+        <br/> */}
+        Tags:  <input type="text" onChange ={handleTags} placeholder={assets.tags}/><br/>
+        <br/>
+        Artist:  <input type="text" onChange ={handleArtist} placeholder={assets.artist}/><br/>
+        <br/>
+        {/* Owner:  <input type="text" onChange ={props.handleOwner}/><br/>
+        <br/> */}
+        {/* Title of collection:  <input type="text" onChange ={props.handleCollection_Title}/><br/>
+        <br/> */}
+        {/* Collection image:  <input type="text" onChange ={props.handleCollection_Image}/><br/>
+        <br/> */}
+        Data url:  <input type="text" onChange ={handleData_URL} placeholder={assets.data_URL}/><br/>
+        <br/>
+        # of Bids:  <input type="number" onChange ={handleBid_Count} placeholder={assets.bid_count}/><br/>
+        <br/>
+        Bid price:  <input type="text" onChange ={handleBid_Price} placeholder={assets.bid_price}/><br/>
+        <br/>
+        # of sales:  <input type="number" onChange ={handleSales_Count} placeholder={assets.sales_count}/><br/>
+        <br/>
+        Sale price:  <input type="text" onChange ={handleSales_Price} placeholder={assets.sales_price}/><br/>
+        <br/> 
+        <input type="submit" value="Submit"/>
+      </form>
+      {/* <button onClick={props.editView}> Cancel </button> */}
+      </div>
+     {/* </p> */}
      </Modal>
      </div>
+
 {/* DELETE NFT */}
+
      <button className="remove-button" onClick={(event)=>{handleDelete(assets)}}>
           Remove
         </button>
         </div>
-       
+
+{/* EDIT TOGGLE NFT */}
+    
       <div>
         {seeNFT ? <EditNFT 
         assets={assets} 
