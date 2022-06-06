@@ -11,6 +11,7 @@ import Scoin from './components/Scoin';
 import AddAsset from './components/AddAsset';
 import EditNFT from './components/EditNFT';
 import Modal from './components/Modal';
+// import EditModal from './components/EditModal';
 import axios from 'axios';
 
 
@@ -98,8 +99,11 @@ const App = () => {
   const [editNFT, setEditNFT] = useState({})
   const [editView, setEditView] = useState(true)
 
-  // modal
+  // add modal
   const [show, setShow] = useState(false)
+
+  // edit modal
+  // const [showEdit, setShowEdit] = useState(false)
  
   // search state
   const [query, setQuery] = useState("")
@@ -227,15 +231,15 @@ const App = () => {
   //nft post
   const submitAsset = (event) => {
     event.preventDefault()
-    // axios.post('http://localhost:3000/assets', {
-    axios.post('https://still-stream-84605.herokuapp.com/assets', {
+    axios.post('http://localhost:3000/assets', {
+    // axios.post('https://still-stream-84605.herokuapp.com/assets', {
       bought: bought,
       sold: sold,
       primary_Image: primary_Image,
       title: title,
       description: description,
-      // createdDate: createdDate,
-      // additionalImages: additionalImages,
+      createdDate: createdDate,
+      additionalImages: additionalImages,
       tags: tags,
   
       // artist or owner info
@@ -251,17 +255,18 @@ const App = () => {
       bid_count: bid_count,
       bid_price: bid_price, 
   
-      // prior sales info 
+    //   // prior sales info 
       sales_count: sales_count, 
       sales_price: sales_price
     }).then(()=>{
-      // axios.get('http://localhost:3000/assets').then((res)=>{
-      axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+      axios.get('http://localhost:3000/assets').then((res)=>{
+      // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
         setAssets(res.data)
+
         // console.log(res.data)
       })
     })
-    toggleShowAsset()
+    // toggleShowAsset()
     setBought()
     setSold()
     setPrimary_Image()
@@ -271,7 +276,7 @@ const App = () => {
     // setAdditionalImages()
     setTags()
     setArtist()
-    // setOwner()
+    setOwner()
     // setCollection_Title()
     // setCollection_Image()
     setData_URL()
@@ -280,6 +285,7 @@ const App = () => {
     setSales_Count()
     setSales_Price()
   }
+
 
   // get request with axios - ethereum/crypto api 
   const getCoins = () => {
@@ -294,8 +300,8 @@ const App = () => {
    // setting up useEffect/invoking get request with axios - ethereum/crypto api 
   useEffect(()=>{
     getCoins()
-    // axios.get('http://localhost:3000/assets').then((res)=>{
-    axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+    axios.get('http://localhost:3000/assets').then((res)=>{
+    // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
       setAssets(res.data)
       // setAssetList(assets)
     })
@@ -304,12 +310,12 @@ const App = () => {
   //nft delete
   const handleDelete = (assetsData)=>{
     axios
-        // .delete(`http://localhost:3000/assets/${assetsData._id}`)
-        .delete(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`)
+        .delete(`http://localhost:3000/assets/${assetsData._id}`)
+        // .delete(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`)
         .then(()=>{
             axios
-                //  .get('http://localhost:3000/assets')
-                 .get('https://still-stream-84605.herokuapp.com/assets')
+                 .get('http://localhost:3000/assets')
+                //  .get('https://still-stream-84605.herokuapp.com/assets')
                 .then((res)=>{
                     setAssets(res.data)
                 })
@@ -317,10 +323,11 @@ const App = () => {
   }
 
   //nft edit
-  const handleEdit = (event, assetsData) => {
-    event.preventDefault()
-    // axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
-    axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
+  // const handleEdit = (event, assetsData) => {
+  const handleEdit = (assetsData) => {
+    // event.preventDefault()
+    axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
+    // axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
       bought: bought,
       sold: sold,
       primary_Image: primary_Image,
@@ -380,15 +387,64 @@ const App = () => {
     <main className="wrapper">
         <header>
               <h1>Cautious Ape</h1>
+
 {/* ADD NEW NFT */}
+
             <div className="asset-button-container">
-                <button className="asset-button" onClick={toggleShowAsset}>
+                <button className="asset-button" onClick={() => setShow(true)}>
+                {/* <button className="asset-button" onClick={toggleShowAsset}> */}
                 Add NFT
                 </button>
+
+{/* ADD MODAL */}
+
+                <Modal title="Add NFT" onClose={() =>setShow(false)} show={show}> 
+                <form onSubmit={submitAsset}>
+          {/* <span> */}
+          Bought:  <input type="checkbox" onChange={handleBought}/>
+          <br/>
+          <br/>
+          Sold:  <input type="checkbox" onChange={handleSold}/><br/>
+          <br/>
+          {/* </span> */}
+          Image: <input className="input-add" type="url" onChange={handlePrimary_Image}/><br/>
+          <br/>
+          Title:  <input className="input-add" type="text" onChange={handleTitle}/><br/>
+          <br/>
+          Description: <input className="input-add" type="text" onChange={handleDescription}/><br/>
+          <br/>
+          {/* Date created: <input type="text" onChange={props.handleCreatedDate}/><br/>
+          <br/> */}
+          {/* Additonal images: <input type="text" onChange ={props.handleAdditionalImages}/><br/>
+          <br/> */}
+          Tags:  <input className="input-add" type="text" onChange ={handleTags}/><br/>
+          <br/>
+          Artist:  <input className="input-add" type="text" onChange ={handleArtist}/><br/>
+          <br/>
+          {/* Owner:  <input type="text" onChange ={props.handleOwner}/><br/>
+          <br/> */}
+          {/* Title of collection:  <input type="text" onChange ={props.handleCollection_Title}/><br/>
+          <br/> */}
+          {/* Collection image:  <input type="text" onChange ={props.handleCollection_Image}/><br/>
+          <br/> */}
+          Data url:  <input className="input-add" type="text" onChange ={handleData_URL}/><br/>
+          <br/>
+          # of Bids:  <input className="input-add" type="number" onChange ={handleBid_Count}/><br/>
+          <br/>
+          Bid price:  <input className="input-add" type="text" onChange ={handleBid_Price}/><br/>
+          <br/>
+          # of sales:  <input className="input-add" type="number" onChange ={handleSales_Count}/><br/>
+          <br/>
+          Sale price:  <input className="input-add" type="text" onChange ={handleSales_Price}/><br/>
+          <br/>
+          <input className="add-button" type="submit" value="Add"/>
+        </form>
+                </Modal>        
             </div>
         </header>
 
 {/* MARQUEE */}
+
         <div className="marquee-container">
           <marquee>
             <ul className="coinList"> 
@@ -493,7 +549,8 @@ const App = () => {
     </div>
         </div>
 
-{/* ADD NFT TOGGLE */}
+{/* ADD NFT TOGGLE (using modal instead) */}
+
 
       <div>
         {seeAsset ? <AddAsset 
@@ -580,6 +637,7 @@ const App = () => {
         </div> */}
     
 {/* BID SELECT FORM */}
+
 <div className="bids-sales-container">
         <form>
           <select className="bids" value={assets} onChange={handleChange}>
@@ -628,45 +686,60 @@ const App = () => {
 {/* EDIT NFT */}
 
       <div className="edit-remove-buttons">
-      <div className="edit-modal-button">
-    <button className="edit-button" onClick={() => {
-      // setShow(true);
-      toggleEditAsset();
+      {/* <div className="edit-modal-button"> */}
 
-     }}>Edit
-     {/* <button className="edit-button" onClick={() => toggleEditAsset(!editView)}> */}
+      {/* <button className="asset-button" onClick={() => setShowEdit(true)}> */}
+                {/* <button className="asset-button" onClick={toggleShowAsset}> */}
+                {/* Edit
+                </button> */}
+
+{/* ALT EDIT BUTTON 1 */}
+    {/* <button className="edit-button" onClick={() => {
+      setEditShow(true); toggleEditAsset();}}>Edit</button> */}
+
+{/* ALT EDIT BUTTON 2 */}
+
+<span>
+<button className="edit-button" onClick={(event) => toggleEditAsset(assets)}>
+{/* toggleEditAsset(!editView)} */}
      {/* <p id="edit-button" onClick={toggleEditAsset}> </p>*/}
        {/* {editView ? 'Edit' : 'Cancel' } */}
-     </button>
-     <Modal title="My Modal" onClose={() => setShow(false)} show={show}>
-     {/* <p> */}
-     <div>
-        <form onSubmit={(event)=>{handleEdit(event, assets)}}>
-        Bought:  <input type="checkbox" onChange={handleBought} /><br/>
+       Edit
+       </button>
+</span>
+    
+{/* EDIT MODAL CODE WIP */}
+
+
+     {/* <EditModal title="My Modal" onClose={() => setShowEdit(false)} showEdit={showEdit}> */}
+        {/* <form onSubmit={(event)=>{handleEdit(event)}}> */}
+        {/* <form onSubmit={(event)=>{handleEdit(assets)}}> */}
+        {/* <form onSubmit={handleEdit}> */}
+        {/* Bought:  <input type="checkbox" onChange={handleBought} /><br/>
           <br/>
         Sold:  <input type="checkbox" onChange={handleSold} defaultChecked="checked"/><br/>
-          <br/>
-         {/* Image: <input type="text" onChange={props.handlePrimary_Image} placeholder={props.assets.primary_Image}/><br/>
-        <br/>  */}
+          <br/> 
+        Image: <input type="text" onChange={handlePrimary_Image} placeholder={assets.primary_Image} alt='&#9786;'/><br/>
+        <br/> 
         Title:  <input type="text" onChange={handleTitle} placeholder={assets.title}/><br/>
         <br/>
          Description: <input type="text" onChange={handleDescription} placeholder={assets.description}/><br/>
-        <br/>
+        <br/>  */}
         {/* Date created: <input type="text" onChange={props.handleCreatedDate}/><br/>
         <br/> */}
         {/* Additonal images: <input type="text" onChange ={props.handleAdditionalImages}/><br/>
         <br/> */}
-        Tags:  <input type="text" onChange ={handleTags} placeholder={assets.tags}/><br/>
+        {/* Tags:  <input type="text" onChange ={handleTags} placeholder={assets.tags}/><br/>
         <br/>
         Artist:  <input type="text" onChange ={handleArtist} placeholder={assets.artist}/><br/>
-        <br/>
+        <br/>  */}
         {/* Owner:  <input type="text" onChange ={props.handleOwner}/><br/>
         <br/> */}
         {/* Title of collection:  <input type="text" onChange ={props.handleCollection_Title}/><br/>
-        <br/> */}
-        {/* Collection image:  <input type="text" onChange ={props.handleCollection_Image}/><br/>
-        <br/> */}
-        Data url:  <input type="text" onChange ={handleData_URL} placeholder={assets.data_URL}/><br/>
+        <br/> 
+        Collection image:  <input type="text" onChange ={props.handleCollection_Image}/><br/>
+        <br/>  */}
+        {/* Data url:  <input type="text" onChange ={handleData_URL} placeholder={assets.data_URL}/><br/>
         <br/>
         # of Bids:  <input type="number" onChange ={handleBid_Count} placeholder={assets.bid_count}/><br/>
         <br/>
@@ -677,14 +750,13 @@ const App = () => {
         Sale price:  <input type="text" onChange ={handleSales_Price} placeholder={assets.sales_price}/><br/>
         <br/> 
         <input type="submit" value="Submit"/>
-      </form>
-      {/* <button onClick={props.editView}> Cancel </button> */}
-      </div>
-     {/* </p> */}
-     </Modal>
-     </div>
+      </form> */}
+      {/* <button onClick={props.editView}> Cancel </button> */} 
+     {/* </EditModal> */}
+
 
 {/* DELETE NFT */}
+
 
      <button className="remove-button" onClick={(event)=>{handleDelete(assets)}}>
           Remove
@@ -692,7 +764,7 @@ const App = () => {
         </div>
 
 {/* EDIT TOGGLE NFT */}
-    
+    <span>
       <div>
         {seeNFT ? <EditNFT 
         assets={assets} 
@@ -718,6 +790,7 @@ const App = () => {
         handleSales_Price={handleSales_Price}
         /> : ""}
       </div>
+      </span>
         </div>
         </div>
           )
