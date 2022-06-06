@@ -3,6 +3,7 @@ const newAsset = (props) => {
     return (
         <div className="asset-container">
           <h3>Submit a new NFT</h3>
+        {/* <form> */}
         <form onSubmit={props.submitAsset}>
           Bought:  <input type="checkbox" onChange={props.handleBought}/><br/>
           <br/>
@@ -38,7 +39,7 @@ const newAsset = (props) => {
           <br/>
           Sale price:  <input type="text" onChange ={props.handleSales_Price}/><br/>
           <br/>
-          <input type="submit" value="Add NFT"/>
+          {/* <input type="submit" value="Add NFT"/> */}
         </form>
       </div>
     )

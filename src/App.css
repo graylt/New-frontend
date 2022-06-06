@@ -463,7 +463,7 @@ a {
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(66, 66, 66, 0.2);
+  background-color: rgba(66, 66, 66, 0.74);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -472,19 +472,87 @@ a {
 .modal-content {
   width: 500px;
   background-color: white;
+  
 }
 
 .modal-header, .modal-footer {
-  padding: 8px;
+  padding: 16px;
+
 }
 
 .modal-title {
   margin: 0;
+  font-size: 24px;
 }
 
 .modal-body {
   padding: 8px;
   border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  margin: 0 24px;
+}
+
+.modal-button {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  background: none;
+  border: none;
+  float: right;
+}
+
+.add-button {
+  background: black;
+  border: none;
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  height: 32px;
+  /* margin-top: 8px; */
+  margin-bottom: 16px;
+}
+
+.input-add {
+  background: none;
+  border: .5px solid black;
+  border-right: none;
+  border-top: none;
+  border-left: none;
+  margin-bottom: px;
+  width: 100%;
+  border-radius: none;
+
+}
+
+/* EDIT INPUT FORM */
+
+.edit-form {
+  font-size: 16px;
+  margin-top: 32px;
+}
+
+.input-edit {
+  background: none;
+  border: .5px solid black;
+  border-right: none;
+  border-top: none;
+  border-left: none;
+  margin-bottom: px;
+  width: 100%;
+  border-radius: none;
+}
+
+.edit-form-button {
+  background: black;
+  border: none;
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  height: 32px;
+  /* margin-top: 8px; */
+  margin-bottom: 16px;
 }
 
