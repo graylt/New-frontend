@@ -243,19 +243,19 @@ aside {
   border-top: none;
   border-left: none;
   margin-bottom: 32px;
-  width: 400px;
+  width: 100%;
 }
 
 .rate-container {
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 400;
   background: none;
   border: .5px solid black;
   border-right: none;
   border-top: none;
   border-left: none;
   margin-bottom: 32px;
-  width: 400px;
+  width: 100%;
 }
 
 span {
@@ -265,6 +265,7 @@ span {
 .span-container {
  text-align: center;
 }
+
 /* CONTENT */
 
 .content-container {
@@ -334,7 +335,6 @@ span {
 
 .status {
   margin-bottom: -8px;
-  /* width: 392px; */
   margin-right: 238px;
 }
 
@@ -352,6 +352,7 @@ span {
   width: 392px;
   margin-right: 8px;
 }
+
 .sales {
   /* margin-bottom: 24px; */
   cursor: pointer;
@@ -359,18 +360,21 @@ span {
   width: 392px;
   margin-left: 8px;
 }
+
 .buy-link {
   /* margin-bottom: 24px; */
   cursor: pointer;
   font-size: 16px;
   width: 392px;
-  margin-left: -24px;
+  margin-left: -16px;
 }
+
 .sell-link {
   /* margin-bottom: 24px; */
   cursor: pointer;
   font-size: 16px;
   width: 392px;
+  margin-left: -16px;
   /* margin-left: 8px; */
 }
 
@@ -390,7 +394,6 @@ a {
   text-align: left;
   width: 80px;
   padding: 16px;
-
 }
 
 .buy-sell-buttons {
@@ -498,6 +501,7 @@ a {
   background: none;
   border: none;
   float: right;
+  cursor: pointer;
 }
 
 .add-button {
@@ -511,6 +515,7 @@ a {
   height: 32px;
   /* margin-top: 8px; */
   margin-bottom: 16px;
+  cursor: pointer;
 }
 
 .input-add {
@@ -539,7 +544,7 @@ a {
   border-top: none;
   border-left: none;
   margin-bottom: px;
-  width: 100%;
+  width: 800px;
   border-radius: none;
 }
 
@@ -550,9 +555,18 @@ a {
   font-family: 'Work Sans', sans-serif;
   font-weight: 600;
   font-size: 16px;
-  width: 100%;
+  width: 800px;
   height: 32px;
   /* margin-top: 8px; */
   margin-bottom: 16px;
+  cursor: pointer;
+}
+
+/* FOOTER */
+
+.footer {
+  float: right;
+  font-weight: 600;
+  position: sticky;
 }
 
