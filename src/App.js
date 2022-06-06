@@ -227,8 +227,8 @@ const App = () => {
   //nft post
   const submitAsset = (event) => {
     event.preventDefault()
-    axios.post('http://localhost:3000/assets', {
-    // axios.post('https://still-stream-84605.herokuapp.com/assets', {
+    // axios.post('http://localhost:3000/assets', {
+    axios.post('https://still-stream-84605.herokuapp.com/assets', {
       bought: bought,
       sold: sold,
       primary_Image: primary_Image,
@@ -255,8 +255,8 @@ const App = () => {
       sales_count: sales_count, 
       sales_price: sales_price
     }).then(()=>{
-      axios.get('http://localhost:3000/assets').then((res)=>{
-      // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+      // axios.get('http://localhost:3000/assets').then((res)=>{
+      axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
         setAssets(res.data)
 
         // console.log(res.data)
@@ -296,8 +296,8 @@ const App = () => {
    // setting up useEffect/invoking get request with axios - ethereum/crypto api 
   useEffect(()=>{
     getCoins()
-    axios.get('http://localhost:3000/assets').then((res)=>{
-    // axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+    // axios.get('http://localhost:3000/assets').then((res)=>{
+    axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
       setAssets(res.data)
       // setAssetList(assets)
     })
@@ -306,12 +306,12 @@ const App = () => {
   //nft delete
   const handleDelete = (assetsData)=>{
     axios
-        .delete(`http://localhost:3000/assets/${assetsData._id}`)
-        // .delete(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`)
+        // .delete(`http://localhost:3000/assets/${assetsData._id}`)
+        .delete(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`)
         .then(()=>{
             axios
-                 .get('http://localhost:3000/assets')
-                //  .get('https://still-stream-84605.herokuapp.com/assets')
+                //  .get('http://localhost:3000/assets')
+                 .get('https://still-stream-84605.herokuapp.com/assets')
                 .then((res)=>{
                     setAssets(res.data)
                 })
@@ -322,8 +322,8 @@ const App = () => {
   // const handleEdit = (event, assetsData) => {
   const handleEdit = (event, assetsData) => {
     event.preventDefault()
-    axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
-    // axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
+    // axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
+    axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
       bought: bought,
       sold: sold,
       primary_Image: primary_Image,
@@ -350,8 +350,8 @@ const App = () => {
       sales_count: sales_count, 
       sales_price: sales_price,
     }).then(()=>{
-       axios.get('http://localhost:3000/assets').then((res)=>{
-      //  axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
+      //  axios.get('http://localhost:3000/assets').then((res)=>{
+       axios.get('https://still-stream-84605.herokuapp.com/assets').then((res)=>{
         setAssets(res.data)
       })
     })
@@ -377,8 +377,6 @@ const App = () => {
     setSales_Count()
     setSales_Price()
 }
-
-
 
   return (
     <>
@@ -548,7 +546,6 @@ const App = () => {
         </div>
 
 {/* ADD NFT TOGGLE (using modal instead) */}
-
 
       <div>
         {seeAsset ? <AddAsset 
