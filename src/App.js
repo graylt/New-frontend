@@ -107,11 +107,10 @@ const App = () => {
  
   // search state
   const [query, setQuery] = useState("")
-
-
-  // handle for select form
-//  const [bids, setBids] = useState() 
  
+  // handle for select form
+ const [bids, setBids] = useState()
+
  const handleChange = (event) => {
   // setBids(event.target.value)
 }
@@ -196,17 +195,14 @@ const App = () => {
       setSeeAsset(false)
     }
   }
-
-
   
-
   const toggleEditAsset = () => {
     if (seeNFT === false) {
       setSeeNFT(true)
     } else {
-      setSeeNFT(false)
-      setEditView(!editView)
-      setEditNFT({})
+      setSeeNFT(false) 
+      // setEditView(!editView)
+      setEditNFT({}) 
       setBought()
       setSold()
       setPrimary_Image()
@@ -224,8 +220,8 @@ const App = () => {
       setBid_Price()
       setSales_Count()
       setSales_Price()
-    }
   }
+}
 
 
   //nft post
@@ -324,8 +320,8 @@ const App = () => {
 
   //nft edit
   // const handleEdit = (event, assetsData) => {
-  const handleEdit = (assetsData) => {
-    // event.preventDefault()
+  const handleEdit = (event, assetsData) => {
+    event.preventDefault()
     axios.put(`http://localhost:3000/assets/${assetsData._id}`, {
     // axios.put(`https://still-stream-84605.herokuapp.com/assets/${assetsData._id}`, {
       bought: bought,
@@ -381,6 +377,8 @@ const App = () => {
     setSales_Count()
     setSales_Price()
 }
+
+
 
   return (
     <>
@@ -700,7 +698,7 @@ const App = () => {
 {/* ALT EDIT BUTTON 2 */}
 
 <span>
-<button className="edit-button" onClick={(event) => toggleEditAsset(assets)}>
+<button className="edit-button" onClick={() => toggleEditAsset(assets)}>
 {/* toggleEditAsset(!editView)} */}
      {/* <p id="edit-button" onClick={toggleEditAsset}> </p>*/}
        {/* {editView ? 'Edit' : 'Cancel' } */}
@@ -795,6 +793,9 @@ const App = () => {
         </div>
           )
         })}
+        <div className="footer">
+        &copy; Jacqueline Schmidt and Tricia Gray 2022 
+        </div>
         </div>
         </div>
         </main>
